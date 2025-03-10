@@ -1,0 +1,42 @@
+name: Build and Release HappierPath
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  build_and_release:
+    name: Zip and Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 📖 Extract Version from manifest.json
+        id: get_version
+        run: |
+          VERSION=$(jq -r '.version' manifest.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Extracted version: $VERSION"
+
+      - name: 📦 Zip Extension Files
+        run: |
+          mkdir -p build
+          zip -r build/HappierPath-v${{ env.VERSION }}.zip . \
+              -x "*.git*" "node_modules/*" ".github/*" "LICENSE*" "README*" 
+
+      - name: 🚀 Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: "HappierPath Release v${{ env.VERSION }}"
+          body: "📢 New version v${{ env.VERSION }} of HappierPath 🚀"
+          draft: false
+          prerelease: false
+          files: build/HappierPath-v${{ env.VERSION }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
