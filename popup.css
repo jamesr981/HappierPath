@@ -1,0 +1,231 @@
+/*html {height:160px;}*/
+body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size:12px;
+    width:390px;
+    margin:15px;
+    background-color:#F9F9F9;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.header {
+    height:20px;
+    clear:both;
+}
+
+h1 {
+    font-size:11px;
+    float:left;
+    margin:0;
+    padding:0px;
+}
+
+h2 {
+    font-size:12px;
+    font-weight:bold;
+    padding:0;
+    margin:0;
+    margin-top:8px;
+    margin-bottom:4px;
+}
+
+#tagline {
+    float:left;
+    font-style:italic;
+    font-size:11px;
+    margin:0;
+    padding:0;
+}
+
+.darkYellow {
+    color:#b8a01d;
+    font-style:normal;
+    margin-left:4px;
+}
+
+#closeButton {
+    font-size:9px;
+    font-style:normal;
+    font-weight:bold;
+    border:1px #999999 solid;
+    background-color:#AA3333;
+    color:#FFFFFF;
+    text-decoration:none;
+    padding:0 3px 0 3px;
+    position:absolute;
+    top:16px;
+    left:380px;
+}
+
+#closeButton:hover {
+    background-color:#FF6666;
+}
+
+p, label {
+    margin:0;
+    padding:2px;
+}
+
+#info {
+    display:none;
+    background-color:#F9F9F9;
+    border:1px #bbbbbb solid;
+    margin:6px 0px 6px 0px;
+    width:380px;
+    overflow:auto;
+    padding:2px;
+}
+
+#info p {
+    font-size:10px;
+    margin:0;
+    padding:0
+}
+
+#info p span {
+    background-color:#fff;
+    padding:1px;
+}
+
+#manipulator {
+    margin-top:4px;
+}
+
+select, input {
+    font-size:12px;
+}
+
+#showDomain {
+    margin:0;
+    padding:6px 0 6px 0;
+}
+
+#currentDomain {
+    width:208px;
+    height:19px;
+}
+
+.tools {
+    font-size:10px;
+}
+
+.tools a {
+    text-decoration:none;
+}
+
+.linkGroup {
+    text-align:right;
+    font-weight:bold;
+}
+
+#jsonIO {
+    clear:both;
+    width:384px;
+    height:380px;
+    overflow:auto;
+    font-size:12px;
+    font-family:Arial, Helvetica, "sans-serif";
+}
+
+#editPaths {
+    display:none;
+    margin:0;
+    width:380px;
+    padding:0px;
+    margin-top:4px;
+}
+
+#editPaths p {
+    padding:3px;
+    font-size:9px;
+}
+
+#jsonRead {
+    border:2px #99EEFF solid;
+    background-color:#F6F9FF;
+}
+
+#jsonWrite {
+    border:2px #FF9999 solid;
+    background-color:#FFF6F0;
+}
+
+#editPaths button:hover {
+    background-color:#FFFFFF;
+    color:#990000;
+    cursor:pointer;
+}
+
+/* NEW SELECTOR */
+#pathList {
+    height:auto;
+    width:380px;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    margin-top:4px;
+    margin-bottom:4px;
+}
+
+#pathList ul {
+    margin-top:4px;
+    padding:0;
+}
+
+#pathList a {
+    text-decoration:none;
+}
+
+#pathList a:hover{
+    text-decoration:underline;
+}
+
+#pathList li {
+    list-style:none;
+}
+
+.listTitle {
+    list-style:none;
+    margin-top:6px;
+    font-weight:bold;
+    color:#444444;
+}
+
+#pathList p {
+    font-weight:bold;
+    margin:0;
+    padding:0;
+    padding-top:3px;
+    padding-bottom:3px;
+}
+
+.below {
+    margin-top:30px;
+}
+
+#pathList:hover {
+    height:auto;
+}
+
+.newTabLink {
+    color:#447744;
+    font-size:11px;
+}
+
+#hidePaths {
+    display:none;
+}
+
+#hideInfo {
+    display:none;
+}
+
+.infoLink {
+    float:right;
+    margin-right:4px;
+}
+
+.infoLink a {
+    text-decoration:none;
+}

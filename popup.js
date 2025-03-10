@@ -34,14 +34,7 @@ function goPath(linkId, newTab) {
         let urlHost = document.getElementById("currentDomain").value;
         let newUrl = urlProtocol + urlHost;
 
-        if (linkId === 0) {
-            newUrl += url.pathname;
-        } else {
-            let linkElement = document.getElementById(`link-${linkId}`);
-            if (linkElement) {
-                newUrl += linkElement.getAttribute("rel");
-            }
-        }
+        newUrl += linkId === 0 ? url.pathname : linkId;
 
         if (newTab === 1) {
             chrome.tabs.create({ url: newUrl });
@@ -52,27 +45,77 @@ function goPath(linkId, newTab) {
     });
 }
 
-function jsonReader() {
-    chrome.storage.local.get(["links"], function (data) {
+function jsonReader(countSetting) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        let currentTab = tabs[0];
+        let currentUrl = new URL(currentTab.url);
+        let currentUrlPath = currentUrl.pathname;
         let selectLinks = "<h2>Select your path:</h2><ul>";
-        let CMjsonLSRead = data.links ? JSON.parse(data.links) : { links: [] };
+        let stringLinks = ""; // Store link data for jsonIO textarea
+        let countLinks = 0;
 
-        CMjsonLSRead.links.forEach((link, index) => {
-            let linkHtml = `<li><a href="#" id="link-${index+1}" data-id="${index}" rel="${link.pathUrl}" class="sameTabLink">${link.pathName}</a></li>`;
-            selectLinks += linkHtml;
-        });
+        // Fetch saved links from chrome.storage
+        chrome.storage.local.get(["links"], function (data) {
+            let storedLinks = data.links ? JSON.parse(data.links) : { links: [] };
 
-        selectLinks += "</ul>";
-        document.getElementById("pathList").innerHTML = selectLinks;
+            if (storedLinks.links.length > 0) {
+                storedLinks.links.forEach((link) => {
+                    countLinks++;
+                    let currentPathName = link.pathName;
+                    let currentPathUrl = link.pathUrl;
+                    stringLinks += `${currentPathName}>${currentPathUrl}\n`;
 
-        // Attach event listener using event delegation
-		let countLinks = 0;
-        document.getElementById("pathList").addEventListener("click", function (event) {
-            if (event.target.classList.contains("sameTabLink")) {
-                event.preventDefault();
-                let pathUrl = event.target.getAttribute("rel");
-                goPath(countLinks++, 0); // Open in the same tab
+                    // Handle regex-based transformations
+                    if (currentPathUrl.includes("<<<")) {
+                        let [regexPattern, replacePattern] = currentPathUrl.split("<<<");
+                        let regex = new RegExp(regexPattern, "gi");
+
+                        if (currentUrlPath.match(regex)) {
+                            let newPath = currentUrlPath.replace(regex, replacePattern);
+                            selectLinks += `
+                                <li>
+                                    <a href="#" class="sameTabLink" data-url="${newPath}">${currentPathName}</a>
+                                    <a href="#" class="newTabLink" data-url="${newPath}">+tab</a>
+                                </li>
+                            `;
+                        }
+                    }
+                    // Handle title-only entries
+                    else if (currentPathUrl == 0) {
+                        selectLinks += `<li class="listTitle">${currentPathName}</li>`;
+                    }
+                    // Handle standard paths
+                    else {
+                        selectLinks += `
+                            <li>
+                                <a href="#" class="sameTabLink" data-url="${currentPathUrl}">${currentPathName}</a>
+                                <a href="#" class="newTabLink" data-url="${currentPathUrl}">+tab</a>
+                            </li>
+                        `;
+                    }
+                });
+
+                // Remove trailing newline character from stringLinks
+                stringLinks = stringLinks.trim();
+            } else {
+                selectLinks = `<li><a href="#" class="sameTabLink" data-url="/">/</a></li>`;
+                stringLinks = "/>/";
             }
+
+            selectLinks += "</ul>";
+            document.getElementById("pathList").innerHTML = selectLinks;
+            document.getElementById("jsonIO").value = stringLinks;
+
+            // Attach event listener using event delegation
+            document.getElementById("pathList").addEventListener("click", function (event) {
+                if (event.target.classList.contains("sameTabLink")) {
+                    event.preventDefault();
+                    goPath(event.target.getAttribute("data-url"), 0);
+                } else if (event.target.classList.contains("newTabLink")) {
+                    event.preventDefault();
+                    goPath(event.target.getAttribute("data-url"), 1);
+                }
+            });
         });
     });
 }
