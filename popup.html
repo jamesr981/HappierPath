@@ -1,279 +1,64 @@
-﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
-<script src="jquery.url.js"></script>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyPath</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="header">
+        <h1>HappyPath</h1>
+        <p id="tagline"><span class="darkYellow">:))</span> ... because everything is relative 
+            <a id="closeButton" href="#">X</a>
+        </p>
+    </div>
 
-<script>
-$(document).ready(function() {
-	setUp(); // populate some variables
-	jsonReader(1); // populate our selector with the current links list
-});
-function setUp() {
-	chrome.tabs.getSelected(null,function(tab) {
-	    var tablink = tab.url;
-	    var url=$.url(tablink);
-	    var urlProtocol=url.attr('protocol');
-	    var urlHost=url.attr('host');
-	    var urlPort=url.attr('port');
-	    var urlPath=url.attr('path');
-	    var urlQuery=url.attr('query');
-	    var urlAnchor=url.attr('anchor');
-	    var urlDomain=urlProtocol+"://"+urlHost;
-	    $("#protocol").html(urlProtocol);
-	    $("#protocolSelector").val(urlProtocol+"://");
-	    $("#host").html(urlHost);
-	    $("#port").html(urlPort);
-	    $("#path").html(urlPath);
-	    $("#query").html(urlQuery);
-	    $("#currentDomain").val(urlHost);
-	});
-	
-}
-function goPath(linkId,newTab) {
-	chrome.tabs.getSelected(null,function(tab) {
-	    var tablink = tab.url;
-	    var url=$.url(tablink);
-	    var urlProtocol=$("#protocolSelector").val();
-	    var urlHost=$("#currentDomain").val();
-	    var urlDomain=urlProtocol+urlHost;
-	    var urlRelative=url.attr('relative');
-	    var newUrl=urlDomain;
-	    if (linkId==0) {
-    	    newUrl=urlDomain+urlRelative;
-	    }else{
-  		    newUrl=urlDomain+$("#"+linkId).attr("rel");
-		}
-		if(newTab==1){
-			chrome.tabs.create({url: newUrl});
-		}else{
-			chrome.tabs.update(tab.id, {url: newUrl});
-		}
-		setUp();
-	});
-}
+    <div id="manipulator">
+        <label for="currentDomain">Domain:</label>
+        <select name="protocolSelector" id="protocolSelector">
+            <option value="http://">http://</option>
+            <option value="https://">https://</option>
+            <option value="ftp://">ftp://</option>
+        </select>
+        <input type="text" name="currentDomain" id="currentDomain" size="38">
+        <button id="pathGo">GO!</button>
+        <br />
+        <div class="tools">
+            <span id="showPaths">
+                <a href="#" id="openEditor">Open Path Editor</a>
+            </span>
+            <span id="hidePaths" style="display: none;">
+                <a href="#" id="closeEditor">Close Path Editor</a>
+            </span>
+            <div class="infoLink">
+                <span id="showInfo">
+                    <a href="#" id="showPageInfo">Show Page Info</a>
+                </span>
+                <span id="hideInfo" style="display: none;">
+                    <a href="#" id="hidePageInfo">Hide Page Info</a>
+                </span>
+            </div>
+        </div>
+        <div id="info" style="display: none;">
+            <p><em>Protocol:</em> <span id="protocol"></span></p>
+            <p><em>Host:</em> <span id="host"></span></p>
+            <p><em>Port:</em> <span id="port"></span></p>
+            <p><em>Path:</em> <span id="path"></span></p>
+            <p><em>Query:</em> <span id="query"></span></p>
+            <p><em>Anchor:</em> <span id="anchor"></span></p>
+        </div>
+        <div id="pathList"></div>
+    </div>
 
-function jsonReader(countSetting) {
+    <div id="editPaths" style="display: none;">
+        <h2>Path Editor</h2>
+        <button id="jsonRead">Read Path List</button>
+        <button id="jsonWrite">Write Path List</button>
+        <p>Use the format "Name&gt;URL", with a new line separating each entry, e.g. "Example Name&gt;/example/path/".</p>
+        <textarea id="jsonIO"></textarea>
+    </div>
 
-	// Get current URL for checking for contextual links
-	chrome.tabs.getSelected(null,function(currentTab) {
-
-		var stringLinks="";
-		var selectLinks="<h2>Select your path:</h2><ul>";
-		var currentPathName="";
-		var currentPathUrl="";
-		var countLinks=0;
-		var currentTabLink="fdsaf";
-		var currentUrl="fdasfs";
-		var currentUrlPath="asfdsf";
-
-		// Set up variables for contextual links
-	    var currentTabLink=currentTab.url;
-	    var currentUrl=$.url(currentTabLink);
-	    var currentUrlPath=currentUrl.attr('path');
-
-		// If a path list exists, use it
-		if (localStorage.getItem('links')) { 
-	
-			var stringLSRead=localStorage.getItem('links'); // get String for 'url' from Local Storage
-			var jsonLSRead=JSON.parse(stringLSRead); // parse string to get JSON array
-	
-			$.each(jsonLSRead.links, function() {
-				countLinks++;
-				currentPathName=this.pathName;
-				currentPathUrl=this.pathUrl;
-				stringLinks=stringLinks+currentPathName+">"+currentPathUrl+"\n";
-				
-				// 3 types of link - 1 JS match RegEx, 2 Title only, or 3 Path 
-				// ------------------------------------------------------------------------
-				// 1 - JS match on RegEx - if currentPathUrl contains "<<<"
-				// 2 - Title only - if currentPathUrl = 0
-				// 3 - Path - if no matches on the above
-				
-				// 1 - JS match on RegEx - if currentPathUrl contains "<<<"
-				if (currentPathUrl.match("<<<"))
-				{
-					// Split the variable - [0] is the RegEx, [1] is the path transformation (with "$n" variables)
-					var thisPathArray=currentPathUrl.split("<<<");
-					// Create new RegEx, case insensitive
-					var thisRegEx = new RegExp(thisPathArray[0], "gi");
-					// Create the dynamic path
-					if (currentUrlPath.match(thisRegEx)) {
-						selectLinks=selectLinks+'<li> <a class="sameTabLink" id="'+countLinks+'" rel="'+
-							currentUrlPath.replace(thisRegEx,thisPathArray[1])+ // RegEx replace to get our path
-							'" href="javascript:goPath('+countLinks+',0);">'+currentPathName+
-							'</a> <a class="newTabLink" id="'+countLinks+'" rel="'+currentPathUrl+
-							'" href="javascript:goPath('+countLinks+',1);">+tab</a>  </li>';
-						//alert(currentUrlPath.replace(thisRegEx,thisPathArray[1]));
-					}
-				}
-				
-				// 2 - Title only - if currentPathUrl = 0
-				else if (currentPathUrl==0)
-				{
-					selectLinks=selectLinks+'<li class="listTitle">'+currentPathName+'</li>';
-				}
-				
-				// 3 - Path - if no matches on the above
-				else
-				{
-					selectLinks=selectLinks+'<li> <a class="sameTabLink" id="'+countLinks+'" rel="'+currentPathUrl+
-						'" href="javascript:goPath('+countLinks+',0);">'+currentPathName+
-						'</a> <a class="newTabLink" id="'+countLinks+'" rel="'+currentPathUrl+
-						'" href="javascript:goPath('+countLinks+',1);">+tab</a>  </li>';
-				}
-				
-			});
-			
-			// Clear rogue space from end of stringLinks
-			stringLinks=stringLinks.substring(0,stringLinks.length-1);
-			
-		} else {// If the link store is empty, use the default
-			stringLinks="/>/";
-			selectLinks='<li><a rel="/" href="goPath(this,0);">/</a></li>';
-		}
-
-		selectLinks=selectLinks+"</ul>";
-		$('#pathList').html(selectLinks);
-		$('#jsonIO').val(stringLinks);
-
-	}); // Close chrome.tab
-
-}
-
-function jsonWriter()	{
-	if ($('#jsonIO').val()=="") { // If box is empty, do nothing
-	} else {
-		if (confirm("This will replace your existing stored values with your new values in the edit box.\n\n Are you sure?")) {
-			var stringInput = $('#jsonIO').val();
-			var arrayInput = stringInput.split("\n");
-			var jsonPaths = { "links": [] };
-			var count=0;
-			$.each(arrayInput, function() {
-				count++;
-				if(this.indexOf(">",0)<1) {
-					alert("Link on line "+count+" malformed - ignored!");
-				} else {
-					var arrayPair = this.split(">");
-					jsonPaths.links.push({"pathName": arrayPair[0], "pathUrl": arrayPair[1]});
-				}
-			});
-			var stringLSWrite=JSON.stringify(jsonPaths); // stringify JSON array ready for writing to LS
-			localStorage.setItem('links',stringLSWrite); // write string to LS
-			var stringLSRead=localStorage.getItem('links'); // get String for 'url' from Local Storage
-			var jsonLSRead=JSON.parse(stringLSRead); // parse string to get JSON array
-			jsonReader(0); // reload the file
-			createContextMenu();
-		}
-	}
-}
-
-</script>
-
-<style>
-	/*html {height:160px;}*/
-	body {font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:12px; width:390px;
-	margin:15px;background-color:#F9F9F9;overflow-y:auto;overflow-x:hidden;}
-	.header {height:20px;clear:both;}
-	h1 {font-size:11px;float:left;margin:0;padding:0px;}
-	h2 {font-size:12px;font-weight:bold;padding:0;margin:0;margin-top:8px;margin-bottom:4px;}
-	#tagline {float:left;font-style:italic;font-size:11px;margin:0;padding:0;}
-	.darkYellow {color:#b8a01d;font-style:normal;margin-left:4px;}
-	#closeButton {font-size:9px;font-style:normal;font-weight:bold;border:1px #999999 solid;
-	background-color:#AA3333;color:#FFFFFF;text-decoration:none;padding:0 3px 0 3px;
-	position:absolute;top:16px;left:380px;}
-	#closeButton:hover {background-color:#FF6666;}
-	p, label {margin:0;padding:2px;}
-	#info {display:none;background-color:#F9F9F9;border:1px #bbbbbb solid;margin:6px 0px 6px 0px;width:380px;overflow:auto;padding:2px;}
-	#info p {font-size:10px;margin:0;padding:0}
-	#info p span {background-color:#fff;padding:1px;}
-	#manipulator {margin-top:4px;}
-	select, input {font-size:12px;}
-	#showDomain {margin:0;padding:6px 0 6px 0;}
-	#currentDomain {width:208px;height:19px;}
-	.tools {font-size:10px;}
-	.tools a {text-decoration:none;}
-	.linkGroup {text-align:right;font-weight:bold;}
-	#jsonIO {clear:both;width:384px;height:380px;overflow:auto;font-size:12px;font-family:Arial, Helvetica, "sans-serif";}
-	#editPaths {display:none;margin:0;width:380px;padding:0px;margin-top:4px;}
-	#editPaths p {padding:3px;font-size:9px;}
-	#jsonRead {border:2px #99EEFF solid;background-color:#F6F9FF;}
-	#jsonWrite {border:2px #FF9999 solid;background-color:#FFF6F0;}
-	#editPaths button:hover {background-color:#FFFFFF;color:#990000;cursor:pointer;}
-	/* NEW SELECTOR */
-	#pathList {	height:auto;width:380px;margin:0;padding:0;overflow:hidden;margin-top:4px;margin-bottom:4px;}
-	#pathList ul {margin-top:4px;padding:0;}
-	#pathList a {text-decoration:none;}
-	#pathList a:hover{text-decoration:underline;}
-	#pathList li {list-style:none;}
-	.listTitle {list-style:none;margin-top:6px;font-weight:bold;color:#444444;}
-	#pathList p {font-weight:bold;margin:0;padding:0;padding-top:3px;padding-bottom:3px;}
-	.below {margin-top:30px;}
-	#pathList:hover {height:auto;}
-	.newTabLink {color:#447744;font-size:11px}
-	#hidePaths{display:none;}
-	#hideInfo{display:none;}
-	.infoLink {float:right;margin-right:4px;}
-	.infoLink a {text-decoration:none;}
-}
-}
-</style>
-
-<div class="header">
-	<h1>HappyPath </h1>
-	<p id="tagline"><span class="darkYellow">:))</span> ... because everything is relative <a id="closeButton" href="javascript:void(0);" onclick="window.close();">X</a></p>
-</div>
-
-<div id="manipulator">
-	<label for="currentDomain">Domain:</label>
-	<select name="protocolSelector" id="protocolSelector">
-		<option value="http://">http://</option>
-		<option value="https://">https://</option>
-		<option value="ftp://">ftp://</option>
-	</select>
-	<input type="text" name="currentDomain" id="currentDomain" value="" size="38">
-	<button name="pathGo" id="pathGo" onclick="goPath(0,0);">GO!</button>
-	<br />
-<div class="tools">
-	<span id="showPaths">
-		<a href="javascript:void(0)" 
-		onclick="$('#editPaths').slideDown();$('#showPaths').hide();$('#hidePaths').show();$('#pathList').slideUp();">Open Path Editor</a>
-	</span>
-	<span id="hidePaths">
-		<a href="javascript:void(0)" 
-		onclick="$('#editPaths').slideUp();$('#showPaths').show();$('#hidePaths').hide();$('#pathList').slideDown();">Close Path Editor</a>
-	</span>
-	<div class="infoLink">
-		<span id="showInfo">
-			<a href="javascript:void(0)" 
-			onclick="$('#info').slideDown();$('#showInfo').hide();$('#hideInfo').show();">Show Page Info</a>
-		</span>
-		<span id="hideInfo">
-			<a href="javascript:void(0)" 
-			onclick="$('#info').slideUp();$('#showInfo').show();$('#hideInfo').hide();">Hide Page Info</a>
-		</span>
-	</div>
-
-</div>
-
-
-	<div id="info">
-		<p><em>Protocol:</em> <span id="protocol"></span></p>
-		<p><em>Host:</em> <span id="host"></span></p>
-		<p><em>Port:</em> <span id="port"></span></p>
-		<p><em>Path:</em> <span id="path"></span></p>
-		<p><em>Query:</em> <span id="query"></span></p>
-		<p><em>Anchor:</em> <span id="anchor"></span></p>
-	</div>
-
-
-	<div id="pathList">
-	</div>
-
-</div>
-
-
-<div id="editPaths">
-	<h2>Path Editor</h2>
-	<button name="jsonRead" id="jsonRead" onclick="jsonReader(0);">Read Path List</button>
-	<button name="jsonWrite" id="jsonWrite" onclick="jsonWriter();">Write Path List</button>
-	<p>Use the format "Name&gt;URL", with a new line separating each entry, e.g. "Example Name&gt;/example/path/". If you want your line to be a title (i.e. not go anywhere), make the path "0", e.g. "Example Title&gt;0".</p>
-	<textarea id="jsonIO"></textarea>
-</div>
+    <script src="popup.js"></script>
+</body>
+</html>
