@@ -9,7 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("hidePageInfo").addEventListener("click", () => toggleInfo(false));
     document.getElementById("jsonRead").addEventListener("click", () => jsonReader(0));
     document.getElementById("jsonWrite").addEventListener("click", jsonWriter);
+    document.getElementById("donateButton").addEventListener("click", () => buyMeABeer());
 });
+
+function buyMeABeer() {
+    chrome.tabs.create({ url: "https://www.buymeacoffee.com/jreynolds" });
+}
 
 function setUp() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
