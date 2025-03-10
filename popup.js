@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     setUp(); // Populate variables
     jsonReader(1); // Populate selector with current links list
-
     // Event listeners for buttons and links
     document.getElementById("pathGo").addEventListener("click", () => goPath(0, 0));
     document.getElementById("openEditor").addEventListener("click", () => toggleEditor(true));
@@ -38,7 +37,7 @@ function goPath(linkId, newTab) {
         if (linkId === 0) {
             newUrl += url.pathname;
         } else {
-            let linkElement = document.getElementById(linkId);
+            let linkElement = document.getElementById(`link-${linkId}`);
             if (linkElement) {
                 newUrl += linkElement.getAttribute("rel");
             }
@@ -59,14 +58,25 @@ function jsonReader() {
         let CMjsonLSRead = data.links ? JSON.parse(data.links) : { links: [] };
 
         CMjsonLSRead.links.forEach((link, index) => {
-            let linkHtml = `<li><a href="#" id="${index}" rel="${link.pathUrl}" class="sameTabLink">${link.pathName}</a></li>`;
+            let linkHtml = `<li><a href="#" id="link-${index+1}" data-id="${index}" rel="${link.pathUrl}" class="sameTabLink">${link.pathName}</a></li>`;
             selectLinks += linkHtml;
         });
 
         selectLinks += "</ul>";
         document.getElementById("pathList").innerHTML = selectLinks;
+
+        // Attach event listener using event delegation
+		let countLinks = 0;
+        document.getElementById("pathList").addEventListener("click", function (event) {
+            if (event.target.classList.contains("sameTabLink")) {
+                event.preventDefault();
+                let pathUrl = event.target.getAttribute("rel");
+                goPath(countLinks++, 0); // Open in the same tab
+            }
+        });
     });
 }
+
 
 function jsonWriter() {
     let inputData = document.getElementById("jsonIO").value.trim();
