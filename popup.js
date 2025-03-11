@@ -10,10 +10,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("jsonRead").addEventListener("click", () => jsonReader(0));
     document.getElementById("jsonWrite").addEventListener("click", jsonWriter);
     document.getElementById("donateButton").addEventListener("click", () => buyMeABeer());
+    document.getElementById("githubButton").addEventListener("click", () => github());
+	document.getElementById("closeButton").addEventListener("click", () => window.close());
 });
 
 function buyMeABeer() {
     chrome.tabs.create({ url: "https://www.buymeacoffee.com/jreynolds" });
+}
+
+function github() {
+    chrome.tabs.create({ url: "https://github.com/jamesr981/HappierPath" });
 }
 
 function setUp() {
