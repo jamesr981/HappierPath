@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p build
           zip -r build/HappierPath-v${{ env.VERSION }}.zip . \
-              -x "*.git*" "node_modules/*" ".github/*" "LICENSE*" "README*" 
+              -x "*.git*" "node_modules/*" ".github/*" "LICENSE*" "README*" "build/*"
 
       - name: 🚀 Create GitHub Release
         id: create_release
