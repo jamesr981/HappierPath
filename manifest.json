@@ -1,10 +1,11 @@
 {
-  "name": "HappyPath",
-  "version": "2.20",
+  "name": "HappierPath",
+  "version": "3.0.0",
+  "manifest_version": 3,
   "description": "... because everything is relative.",
-  "browser_action": {
+  "action": {
     "default_icon": "icon_16.png",
-    "popup": "popup.html"
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "icon_16.png",
@@ -13,7 +14,10 @@
   },
   "permissions": [
     "tabs",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
-  "background_page": "background.html"
+  "background": {
+    "service_worker": "background.js"
+  }
 }

@@ -1,9 +1,15 @@
-HappyPath
+Based on [HappyPath](https://github.com/gcLabs/HappyPath)
+I've created this fork as Google has begun removing Manifest V2 extensions from Google.
+This fork updates HappyPath to be compilant in Manifest V3.
+
+Thank you [gcLabs](https://github.com/gcLabs) for creating the original extension. This has saved me and my company countless hours.
+
+HappierPath
 ... because everything is relative.
 
-You know what a bookmark manager does, right? HappyPath does the same thing for paths.
+You know what a bookmark manager does, right? HappierPath does the same thing for paths.
 
-Instead of bookmarking www.google.com or www.bbcnews.com, HappyPath lets you bookmark only the path, e.g. /cms/login.html or /api/introspect. This is mostly so that enterprise CMS users and other lazy webadmins can gain access to the same tools across multiple websites, without having to type in the paths repeatedly. My company has about 300 websites, all with the same paths to the same admin tools - so this saves me a lot of time. Maybe it will save you some too.
+Instead of bookmarking www.google.com or www.bbcnews.com, HappierPath lets you bookmark only the path, e.g. /cms/login.html or /api/introspect. This is mostly so that enterprise CMS users and other lazy webadmins can gain access to the same tools across multiple websites, without having to type in the paths repeatedly. My company has about 300 websites, all with the same paths to the same admin tools - so this saves me a lot of time. Maybe it will save you some too.
 
 CHANGES IN VERSION 3.0:
 Bug fixes
@@ -14,7 +20,7 @@ RegEx transformations: You can now add a RegEx transformation in this format:
 {Label}>{RegEx URL match}<<<{Link to generate (with option attributes in this format: $n)}
 For example:
 Edit this page>(\/pages\/?id=)([0-9]{1,9}).*<<</editpage/?id=$2
-If HappyPath finds a RegEx match on the current URL, it will create a link using the transformation path.
+If HappierPath finds a RegEx match on the current URL, it will create a link using the transformation path.
 
 To do (in no particular order):
  - Save domains as well as paths
