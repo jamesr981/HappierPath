@@ -42,7 +42,8 @@ function goCMPath(menuItemId, tab) {
         let CMjsonLSRead = data.links ? JSON.parse(data.links) : { links: [] };
 
         if (CMjsonLSRead.links.length > 0) {
-            let linkItem = CMjsonLSRead.links[menuItemId - 1]; // Adjust array index
+			const linkId = menuItemId.replace("cm_", "");
+            let linkItem = CMjsonLSRead.links[linkId - 1]; // Adjust array index
             if (linkItem) {
                 currentPathUrl = linkItem.pathUrl;
             }
