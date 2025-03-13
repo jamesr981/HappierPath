@@ -1,6 +1,6 @@
 {
   "name": "HappierPath",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "manifest_version": 3,
   "description": "... because everything is relative.",
   "action": {
@@ -13,11 +13,7 @@
     "128": "icon_128.png"
   },
   "permissions": [
-    "tabs",
-    "contextMenus",
+    "activeTab",
     "storage"
-  ],
-  "background": {
-    "service_worker": "background.js"
-  }
+  ]
 }
