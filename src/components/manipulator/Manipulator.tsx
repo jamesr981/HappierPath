@@ -59,8 +59,9 @@ const Manipulator = ({
     ) => {
       if (updatedTabId === tab?.id && changeInfo.status === 'complete') {
         chrome.tabs.onUpdated.removeListener(handleTabUpdate); // Cleanup listener
-       getCurrentTab()
-       .then((tab) => {setCurrentTab(tab)});
+        getCurrentTab().then((tab) => {
+          setCurrentTab(tab);
+        });
       }
     };
 

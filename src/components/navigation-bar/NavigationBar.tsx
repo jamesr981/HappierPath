@@ -41,7 +41,7 @@ const NavigationBar = ({
         id="protocolSelector"
         value={selectedProtocol}
         onChange={(e) => onProtocolChange(e.currentTarget.value)}
-        style={{marginRight: '8px'}}
+        style={{ marginRight: '8px' }}
       >
         <option value="http://">http://</option>
         <option value="https://">https://</option>
@@ -54,7 +54,7 @@ const NavigationBar = ({
         size={38}
         value={hostname}
         onChange={(e) => setHostname(e.target.value)}
-        style={{marginRight: '8px'}}
+        style={{ marginRight: '8px' }}
       />
       <button id="pathGo" onClick={onGoClicked}>
         GO!
