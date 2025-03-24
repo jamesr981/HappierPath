@@ -1,71 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HappierPath</title>
-    <link rel="stylesheet" href="popup.css">
 </head>
-
 <body>
-    <div class="header">
-        <h1>HappierPath</h1>
-        <p id="tagline"><span class="darkBlue">:))</span> ... because everything is relative 
-            <a id="closeButton" href="#">X</a>
-        </p>
-    </div>
-
-    <div id="manipulator">
-        <label for="currentDomain">Domain:</label>
-        <select name="protocolSelector" id="protocolSelector">
-            <option value="http://">http://</option>
-            <option value="https://">https://</option>
-            <option value="ftp://">ftp://</option>
-        </select>
-        <input type="text" name="currentDomain" id="currentDomain" size="38">
-        <button id="pathGo">GO!</button>
-        <br />
-        <div class="tools">
-            <span id="showPaths">
-                <a href="#" id="openEditor">Open Path Editor</a>
-            </span>
-            <span id="hidePaths" style="display: none;">
-                <a href="#" id="closeEditor">Close Path Editor</a>
-            </span>
-            <div class="infoLink">
-                <span id="showInfo">
-                    <a href="#" id="showPageInfo">Show Page Info</a>
-                </span>
-                <span id="hideInfo" style="display: none;">
-                    <a href="#" id="hidePageInfo">Hide Page Info</a>
-                </span>
-            </div>
-        </div>
-        <div id="info" style="display: none;">
-            <p><em>Protocol:</em> <span id="protocol"></span></p>
-            <p><em>Host:</em> <span id="host"></span></p>
-            <p><em>Port:</em> <span id="port"></span></p>
-            <p><em>Path:</em> <span id="path"></span></p>
-            <p><em>Query:</em> <span id="query"></span></p>
-            <p><em>Anchor:</em> <span id="anchor"></span></p>
-        </div>
-        <div id="pathList"></div>
-    </div>
-
-    <div id="editPaths" style="display: none;">
-        <h2>Path Editor</h2>
-        <button id="jsonRead">Read Path List</button>
-        <button id="jsonWrite">Write Path List</button>
-        <p>Use the format "Name&gt;URL", with a new line separating each entry, e.g. "Example Name&gt;/example/path/".</p>
-        <textarea id="jsonIO"></textarea>
-    </div>
-
-    <!-- Buy Me a Beer & GitHub Button -->
-    <div id="support-buttons">
-        <button id="donateButton">🍺 Buy Me a Beer</button>
-        <button id="githubButton">💻 Github</button>
-    </div>
-
-    <script src="popup.js"></script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
