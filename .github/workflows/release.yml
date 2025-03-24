@@ -37,7 +37,7 @@ jobs:
       - name: 📖 Extract Version from manifest.json
         id: get_version
         run: |
-          VERSION=$(jq -r '.version' manifest.json)
+          VERSION=$(jq -r '.version' dist/manifest.json)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Extracted version: $VERSION"
 
