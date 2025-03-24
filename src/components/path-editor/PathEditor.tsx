@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, Links } from '../../types/Link';
 
 interface PathEditorProps {
@@ -41,14 +41,14 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
     setLinks(jsonPaths);
   };
 
-  const getLinkString = () => {
+  const getLinkString = useCallback(() => {
     let stringLinks = '';
     links.links.forEach((link) => {
       stringLinks += `${link.pathName}>${link.pathUrl}\n`;
     });
 
     return stringLinks.substring(0, stringLinks.length - 1);
-  };
+  }, [links]);
 
   const onJsonReadClick = () => {
     const linkString = getLinkString();
@@ -58,7 +58,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
   useEffect(() => {
     const linkString = getLinkString();
     setEditorText(linkString);
-  }, [links]);
+  }, [links, getLinkString]);
 
   return (
     <div id="editPaths">

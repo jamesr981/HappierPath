@@ -67,9 +67,11 @@ const Manipulator = ({
 
     chrome.tabs.onUpdated.addListener(handleTabUpdate);
 
-    newTab || !tab?.id
-      ? chrome.tabs.create({ url: newUrl })
-      : chrome.tabs.update(tab.id, { url: newUrl });
+    if (newTab || !tab?.id) {
+      chrome.tabs.create({ url: newUrl });
+    } else {
+      chrome.tabs.update(tab.id, { url: newUrl });
+    }
   };
 
   return (
