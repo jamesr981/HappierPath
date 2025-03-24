@@ -1,8 +1,8 @@
 {
   "name": "HappierPath",
-  "version": "3.0.4",
+  "version": "4.0.0",
   "manifest_version": 3,
-  "description": "... because everything is relative.",
+  "description": "... because everything is still relative.",
   "action": {
     "default_icon": "icon_16.png",
     "default_popup": "popup.html"
@@ -13,7 +13,7 @@
     "128": "icon_128.png"
   },
   "permissions": [
-    "activeTab",
+    "tabs",
     "storage"
   ]
 }
