@@ -1,19 +1,38 @@
-name: Build and Release HappierPath
+name: Build, Package, and Release React Vite App
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:  # Allows manual triggering from GitHub UI
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  build_and_release:
-    name: Zip and Create Release
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛎 Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23.10.0'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Prettier check
+        run: npm run prettier -- --check .
+
+      - name: Run ESLint check
+        run: npm run eslint -- .
+
+      - name: Run build
+        run: npm run build-prod
 
       - name: 📖 Extract Version from manifest.json
         id: get_version
@@ -22,13 +41,12 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Extracted version: $VERSION"
 
-      - name: 📦 Zip Extension Files
+      - name: Package dist folder
         run: |
-          mkdir -p build
-          zip -r build/HappierPath-v${{ env.VERSION }}.zip . \
-              -x "*.git*" "node_modules/*" ".github/*" "LICENSE*" "README*" "build/*"
+          zip -r HappierPath-v${{ env.VERSION }}.zip dist
 
       - name: 🚀 Create GitHub Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
@@ -37,6 +55,6 @@ jobs:
           body: "📢 New version v${{ env.VERSION }} of HappierPath 🚀"
           draft: false
           prerelease: false
-          files: build/HappierPath-v${{ env.VERSION }}.zip
+          files: HappierPath-v${{ env.VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
