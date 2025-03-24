@@ -1,4 +1,4 @@
-name: Build, Package, and Release React Vite App
+name: Build, Package, and Release HappierPath
 
 on:
   push:
