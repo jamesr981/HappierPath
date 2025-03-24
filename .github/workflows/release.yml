@@ -45,6 +45,12 @@ jobs:
         run: |
           zip -r HappierPath-v${{ env.VERSION }}.zip dist
 
+                - name: 📦 Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HappierPath-v${{ env.VERSION }}.zip
+          path: HappierPath-v${{ env.VERSION }}.zip
+
       - name: 🚀 Create GitHub Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         id: create_release
