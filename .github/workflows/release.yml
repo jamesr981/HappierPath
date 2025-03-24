@@ -45,7 +45,7 @@ jobs:
         run: |
           zip -r HappierPath-v${{ env.VERSION }}.zip dist
 
-                - name: 📦 Upload build artifact
+      - name: 📦 Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: HappierPath-v${{ env.VERSION }}.zip
