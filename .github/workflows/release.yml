@@ -41,9 +41,9 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Extracted version: $VERSION"
 
-      - name: Package dist folder
+      - name: Package dist folder contents
         run: |
-          zip -r HappierPath-v${{ env.VERSION }}.zip dist
+          cd dist && zip -r ../HappierPath-v${{ env.VERSION }}.zip .
 
       - name: 📦 Upload build artifact
         uses: actions/upload-artifact@v4
