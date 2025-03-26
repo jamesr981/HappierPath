@@ -17,7 +17,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.23.0",
     "@types/chrome": "^0.0.309",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
