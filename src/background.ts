@@ -1,4 +1,4 @@
-const DocumentUrlPatterns = ["http://*/*", "https://*/*", "ftp://*/*"]
+const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
 async function createContextMenu() {
   const links = await loadLinks();
@@ -10,7 +10,7 @@ async function createContextMenu() {
       title: 'root',
       contexts: ['page'],
       enabled: false,
-      documentUrlPatterns: DocumentUrlPatterns
+      documentUrlPatterns: DocumentUrlPatterns,
     });
 
     return;
@@ -23,7 +23,7 @@ async function createContextMenu() {
       enabled: !isHeading,
       contexts: ['page'],
       id: index.toString(),
-      documentUrlPatterns: DocumentUrlPatterns
+      documentUrlPatterns: DocumentUrlPatterns,
     });
   });
 }
