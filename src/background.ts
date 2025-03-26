@@ -1,3 +1,5 @@
+const DocumentUrlPatterns = ["http://*/*", "https://*/*", "ftp://*/*"]
+
 async function createContextMenu() {
   const links = await loadLinks();
 
@@ -6,8 +8,9 @@ async function createContextMenu() {
     chrome.contextMenus.create({
       id: 'default_root',
       title: 'root',
-      contexts: ['all'],
+      contexts: ['page'],
       enabled: false,
+      documentUrlPatterns: DocumentUrlPatterns
     });
 
     return;
@@ -18,8 +21,9 @@ async function createContextMenu() {
     chrome.contextMenus.create({
       title: link.pathName,
       enabled: !isHeading,
-      contexts: ['all'],
+      contexts: ['page'],
       id: index.toString(),
+      documentUrlPatterns: DocumentUrlPatterns
     });
   });
 }
@@ -44,7 +48,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (isNaN(parsed)) return;
     itemIndex = parsed;
   } else if (menuItemIdType === 'number') {
-    itemIndex = info.menuItemId as unknown as number;
+    itemIndex = info.menuItemId as number;
   } else {
     return;
   }
@@ -70,7 +74,7 @@ async function goPath(tab: chrome.tabs.Tab, urlIndex: number) {
   chrome.tabs.update(tab.id, { url: newUrl });
 }
 
-async function loadLinks(): Promise<Links> {
+async function loadLinks() {
   const data: LocalStorage = await chrome.storage.local.get(['links']);
   if (!data?.links?.length) return { links: [] };
 

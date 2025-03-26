@@ -8,12 +8,11 @@ export default defineConfig(({mode}) => {
     build: {
       outDir: 'dist',
       sourcemap: isDebug,
-      minify: isDebug ? false : true,
+      minify: !isDebug,
       rollupOptions: {
         input: {
           popup: 'popup.html',
-          background: 'src/background.ts',
-          content: 'src/content.ts'
+          background: 'src/background.ts'
         },
         output: {
           entryFileNames: '[name].js',
