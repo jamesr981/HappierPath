@@ -2,16 +2,13 @@ import { Links } from "../types/Link";
 import { Options } from "./setup";
 
 export const getStorageType = async () => {
-  var useSyncStorage: boolean = false;
-
-  await chrome.storage.sync.get('useSyncStorage').then((result) => {
-    useSyncStorage = result?.useSyncStorage ?? false;
-  });
+  const result = await chrome.storage.sync.get('useSyncStorage');
+  const useSyncStorage: boolean = result?.useSyncStorage ?? false;
 
   return useSyncStorage ? chrome.storage.sync : chrome.storage.local;
 }
 
-const useFallBackStorage = async (key: string) => {
+const UseFallBackStorage = async (key: string) => {
   const data = localStorage.getItem(key);
   return data;
 }
@@ -21,13 +18,12 @@ export const getLinksFromStorage = async (): Promise<Links> => {
   const result = await storage.get('json');
 
   if (!result.json) {
-    let data = await useFallBackStorage('links');
+    const data = await UseFallBackStorage('links');
     if (!data) return { links: [] };
     return JSON.parse(data);
   }
 
-  let json: Links = JSON.parse(result.json);
-  return json;
+  return JSON.parse(result.json);
 }
 
 export const saveLinksToStorage = async (jsonPaths: Links) => {
@@ -38,7 +34,7 @@ export const saveLinksToStorage = async (jsonPaths: Links) => {
 }
 
 export const getUseSyncStorage = async () => {
-  var result = await chrome.storage.sync.get('useSyncStorage');
+  const result = await chrome.storage.sync.get('useSyncStorage');
   return result?.useSyncStorage ?? false;
 }
 

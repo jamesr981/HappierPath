@@ -6,7 +6,7 @@ export const getCurrentTab = async () => {
 };
 
 export const loadLinks = async () => {
-  let myLinks = await getLinksFromStorage();
+  const myLinks = await getLinksFromStorage();
   return myLinks;
 };
 
