@@ -5,7 +5,7 @@ import { getCurrentOptions, Options } from './functions/setup';
 import { getLinksFromStorage, saveLinksToStorage, saveUseSyncStorageToStorage } from './functions/storage';
 import { Links } from './types/Link';
 
-const App = () => {
+const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
 
   const changeOptions = (options: Options) => {
@@ -60,4 +60,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default OptionsApp;
