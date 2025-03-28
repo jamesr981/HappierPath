@@ -1,4 +1,4 @@
-import { Links } from '../types/Link';
+import { getUseSyncStorage, getLinksFromStorage } from "./storage";
 
 export const getCurrentTab = async () => {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -6,9 +6,16 @@ export const getCurrentTab = async () => {
 };
 
 export const loadLinks = async () => {
-  const data = localStorage.getItem('links');
-  if (!data) return { links: [] };
-
-  const storedLinks: Links = JSON.parse(data);
-  return storedLinks;
+  const myLinks = await getLinksFromStorage();
+  return myLinks;
 };
+
+export const getCurrentOptions = async (): Promise<Options> => {
+	return {
+	  useSyncStorage: await getUseSyncStorage(),
+	};
+};
+
+export interface Options {
+  useSyncStorage: boolean;
+}
