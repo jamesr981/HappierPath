@@ -11,11 +11,21 @@ export const getStorageType = async () => {
   return useSyncStorage ? chrome.storage.sync : chrome.storage.local;
 }
 
+const useFallBackStorage = async (key: string) => {
+  const data = localStorage.getItem(key);
+  return data;
+}
+
 export const getLinksFromStorage = async (): Promise<Links> => {
   const storage = await getStorageType();
   const result = await storage.get('json');
 
-  if (!result.json) return { links: [] };
+  if (!result.json) {
+    let data = await useFallBackStorage('links');
+    if (!data) return { links: [] };
+    return JSON.parse(data);
+  }
+
   let json: Links = JSON.parse(result.json);
   return json;
 }
