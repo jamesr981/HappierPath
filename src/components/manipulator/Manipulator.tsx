@@ -96,11 +96,14 @@ const Manipulator = ({
       </div>
       {(isInfoShown && <Info url={url} />) || null}
 
-      <PathList
-        links={links}
-        url={url}
-        onNavigateLinkClick={onNavigateLinkClick}
-      />
+      {(!isEditorOpen && (
+        <PathList
+          links={links}
+          url={url}
+          onNavigateLinkClick={onNavigateLinkClick}
+        />
+      )) ||
+        null}
     </div>
   );
 };
