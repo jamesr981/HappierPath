@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, Links } from '../../types/Link';
-import { getStorageType } from '../../functions/setup';
+import { saveLinksToStorage } from '../../functions/storage';
 
 interface PathEditorProps {
   links: Links;
@@ -36,12 +36,8 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
       .filter((z) => !!z);
 
     const jsonPaths: Links = { links: links };
-    const json = JSON.stringify(jsonPaths);
-
-    getStorageType().then((storage) => {
-	storage.set({ json: json });
-    });
-
+    
+    saveLinksToStorage(jsonPaths);
     setLinks(jsonPaths);
   };
 

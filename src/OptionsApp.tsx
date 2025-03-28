@@ -2,12 +2,22 @@ import { useEffect, useState } from 'react';
 import Header from './components/header/Header';
 import SupportButtons from './components/support-buttons/SupportButtons';
 import { getCurrentOptions, Options } from './functions/setup';
+import { getLinksFromStorage, saveLinksToStorage, saveUseSyncStorageToStorage } from './functions/storage';
+import { Links } from './types/Link';
 
 const App = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
 
   const changeOptions = (options: Options) => {
-    chrome.storage.sync.set({ useSyncStorage: options.useSyncStorage });
+    let links: Links = { links: [] };
+
+    getLinksFromStorage()
+    .then((linksFromStoage) => {
+      links = linksFromStoage
+      saveUseSyncStorageToStorage(options);
+    })
+    .then(() => saveLinksToStorage(links));
+    
     setOptions(options);
   };
 
