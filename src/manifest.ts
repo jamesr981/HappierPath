@@ -4,7 +4,7 @@ export function getManifest(browser: 'chrome' | 'firefox') {
   return {
     manifest_version: 3,
     name: 'HappierPath',
-    version: '4.1.3',
+    version: '4.2.0',
     description: '... because everything is still relative.',
     action: {
       default_icon: 'icon_16.png',
