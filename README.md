@@ -16,7 +16,7 @@ Instead of bookmarking www.google.com or www.bbcnews.com, HappierPath lets you b
 * Run `npm install`
 * Depending on your browser run one of the following commands
   * Chrome `npm run build-prod-chrome`
-  * FireFox `npm run build-prod-chrome`
+  * FireFox `npm run build-prod-firefox`
 * Load the /dist folder into your browser. Instructions are dependent on browser, look up documentation for your browser
 
 ## Testing
