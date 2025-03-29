@@ -39,7 +39,11 @@ jobs:
       - name: 📖 Extract Version from manifest.json
         id: get_version
         run: |
-          VERSION=$(jq -r '.version' dist/manifest.json)
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=$(jq -r '.version' dist/manifest.json)
+          else
+            VERSION="DEV"
+          fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Extracted version: $VERSION"
 
@@ -63,7 +67,11 @@ jobs:
       - name: 📖 Extract Version
         id: extract_version
         run: |
-          VERSION=$(jq -r '.version' dist/manifest.json)
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=$(jq -r '.version' dist/manifest.json)
+          else
+            VERSION="DEV"
+          fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Extracted version: $VERSION"
 
