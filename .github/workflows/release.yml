@@ -36,17 +36,6 @@ jobs:
       - name: Run build
         run: npm run build-prod
 
-      - name: 📖 Extract Version from manifest.json
-        id: get_version
-        run: |
-          if [[ $GITHUB_REF == refs/tags/v* ]]; then
-            VERSION=$(jq -r '.version' dist/manifest.json)
-          else
-            VERSION="DEV"
-          fi
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Extracted version: $VERSION"
-
       - name: 📦 Upload built files
         uses: actions/upload-artifact@v4
         with:
@@ -64,16 +53,16 @@ jobs:
           name: dist-files
           path: dist
 
-      - name: 📖 Extract Version
+      - name: 📖 Set Version from Tag
         id: extract_version
         run: |
           if [[ $GITHUB_REF == refs/tags/v* ]]; then
-            VERSION=$(jq -r '.version' dist/manifest.json)
+            VERSION=${GITHUB_REF#refs/tags/v}
           else
             VERSION="DEV"
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Extracted version: $VERSION"
+          echo "Set version: $VERSION"
 
       - name: Package dist folder
         run: |
@@ -82,7 +71,7 @@ jobs:
       - name: 📦 Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: HappierPath-v${{ env.VERSION }}.zip
+          name: HappierPath-v${{ env.VERSION }}
           path: HappierPath-v${{ env.VERSION }}.zip
 
   release:
