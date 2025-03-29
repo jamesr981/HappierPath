@@ -1,7 +1,7 @@
 {
   "name": "happier-path",
   "private": true,
-  "version": "4.1.0",
+  "version": "4.0.2",
   "type": "module",
   "scripts": {
     "build-dev": "tsc -b && vite build --mode development",
