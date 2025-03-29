@@ -4,11 +4,9 @@
   "version": "4.0.2",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build-dev": "tsc -b && vite build --mode development",
     "build-prod": "tsc -b && vite build --mode production",
     "lint": "eslint .",
-    "preview": "vite preview",
     "prettier-fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\"",
     "prettier": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\""
   },
@@ -29,7 +27,6 @@
     "globals": "^15.15.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
-    "tailwindcss": "^4.0.14",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.3"
