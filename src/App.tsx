@@ -5,9 +5,10 @@ import SupportButtons from './components/support-buttons/SupportButtons';
 import Manipulator from './components/manipulator/Manipulator';
 import { loadLinks, getCurrentTab } from './functions/setup';
 import { Links } from './types/Link';
+import Browser from 'webextension-polyfill';
 
 const App = () => {
-  const [currentTab, setCurrentTab] = useState<chrome.tabs.Tab>();
+  const [currentTab, setCurrentTab] = useState<Browser.Tabs.Tab>();
   const [currentUrl, setCurrentUrl] = useState<URL | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [links, setLinks] = useState<Links>({ links: [] });

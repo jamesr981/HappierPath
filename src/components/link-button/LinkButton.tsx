@@ -1,3 +1,5 @@
+import Browser from 'webextension-polyfill';
+
 interface LinkButtonProps {
   link: string;
   buttonText: string;
@@ -5,7 +7,7 @@ interface LinkButtonProps {
 
 const LinkButton = ({ link, buttonText }: LinkButtonProps) => {
   const onButtonClick = function () {
-    chrome.tabs.create({ url: link });
+    Browser.tabs.create({ url: link });
   };
   return (
     <button onClick={onButtonClick} style={{ marginRight: '8px' }}>
