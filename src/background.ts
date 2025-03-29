@@ -1,11 +1,13 @@
+import Browser from 'webextension-polyfill';
+
 const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
 async function createContextMenu() {
   const links = await loadLinks();
 
-  chrome.contextMenus.removeAll();
+  Browser.contextMenus.removeAll();
   if (!links || !links.links.length) {
-    chrome.contextMenus.create({
+    Browser.contextMenus.create({
       id: 'default_root',
       title: 'root',
       contexts: ['page'],
@@ -18,7 +20,7 @@ async function createContextMenu() {
 
   links.links.forEach((link, index) => {
     const isHeading = link.pathUrl === '0';
-    chrome.contextMenus.create({
+    Browser.contextMenus.create({
       title: link.pathName,
       enabled: !isHeading,
       contexts: ['page'],
@@ -28,17 +30,17 @@ async function createContextMenu() {
   });
 }
 
-chrome.runtime.onInstalled.addListener(() => {
+Browser.runtime.onInstalled.addListener(() => {
   createContextMenu();
 });
 
-chrome.storage.onChanged.addListener((changes) => {
+Browser.storage.onChanged.addListener((changes) => {
   if (changes.links) {
     createContextMenu();
   }
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+Browser.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab || !tab.id) return;
 
   let itemIndex: number;
@@ -56,7 +58,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   goPath(tab, itemIndex);
 });
 
-async function goPath(tab: chrome.tabs.Tab, urlIndex: number) {
+async function goPath(tab: Browser.Tabs.Tab, urlIndex: number) {
   if (!tab.id) return;
 
   if (tab.id < 0) {
@@ -71,11 +73,11 @@ async function goPath(tab: chrome.tabs.Tab, urlIndex: number) {
   if (!tab.url) return;
   const url = new URL(tab.url);
   const newUrl = `${url.protocol}//${url.hostname}${link.pathUrl}`;
-  chrome.tabs.update(tab.id, { url: newUrl });
+  Browser.tabs.update(tab.id, { url: newUrl });
 }
 
-async function loadLinks() {
-  const data: LocalStorage = await chrome.storage.local.get(['links']);
+async function loadLinks(): Promise<Links> {
+  const data = (await Browser.storage.local.get(['links'])) as LocalStorage;
   if (!data?.links?.length) return { links: [] };
 
   const storedLinks: Links = JSON.parse(data.links);

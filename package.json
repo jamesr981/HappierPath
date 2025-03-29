@@ -4,8 +4,10 @@
   "version": "4.1.3",
   "type": "module",
   "scripts": {
-    "build-dev": "tsc -b && vite build --mode development",
-    "build-prod": "tsc -b && vite build --mode production",
+    "build-dev-chrome": "tsc -b && cross-env BROWSER=chrome vite build --mode development",
+    "build-dev-firefox": "tsc -b && cross-env BROWSER=firefox vite build --mode development",
+    "build-prod-chrome": "tsc -b && cross-env BROWSER=chrome vite build --mode production",
+    "build-prod-firefox": "tsc -b && cross-env BROWSER=firefox vite build --mode production",
     "lint": "eslint .",
     "prettier-fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\"",
     "prettier": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\""
@@ -18,18 +20,24 @@
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/chrome": "^0.0.309",
+    "@types/node": "^22.13.14",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
+    "@types/webextension-polyfill": "^0.12.3",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "vite-plugin-static-copy": "^2.3.0",
+    "zip-a-folder": "^3.1.9"
   }
 }
