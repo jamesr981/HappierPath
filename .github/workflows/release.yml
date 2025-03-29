@@ -94,6 +94,6 @@ jobs:
           body: "📢 New version ${{ github.ref_name }} of HappierPath 🚀"
           draft: false
           prerelease: false
-          files: HappierPath-${{ github.ref_name }}.zip
+          files: HappierPath-${{ github.ref_name }}/HappierPath-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
