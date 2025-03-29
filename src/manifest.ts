@@ -27,7 +27,7 @@ export function getManifest(browser: 'chrome' | 'firefox') {
     browser_specific_settings: {
       gecko: {
         id: 'addon@happierpath.dev',
-        strict_min_version: '58.0',
+        strict_min_version: '112.0',
       },
     },
   };
