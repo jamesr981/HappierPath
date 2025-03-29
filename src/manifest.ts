@@ -24,5 +24,11 @@ export function getManifest(browser: 'chrome' | 'firefox') {
       : {
           service_worker: 'background.js',
         },
+    browser_specific_settings: {
+      gecko: {
+        id: 'addon@happierpath.dev',
+        strict_min_version: '58.0',
+      },
+    },
   };
 }
