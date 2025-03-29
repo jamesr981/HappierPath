@@ -82,7 +82,7 @@ jobs:
       - name: 📦 Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: HappierPath-v${{ env.VERSION }}
+          name: HappierPath-v${{ env.VERSION }}.zip
           path: HappierPath-v${{ env.VERSION }}.zip
 
   release:
