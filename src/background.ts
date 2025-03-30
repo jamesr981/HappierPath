@@ -1,4 +1,5 @@
 import Browser from 'webextension-polyfill';
+import { getLinksFromStorage } from './functions/storage';
 
 const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
@@ -77,16 +78,9 @@ async function goPath(tab: Browser.Tabs.Tab, urlIndex: number) {
 }
 
 async function loadLinks(): Promise<Links> {
-  const data = (await Browser.storage.local.get(['links'])) as LocalStorage;
-  if (!data?.links?.length) return { links: [] };
-
-  const storedLinks: Links = JSON.parse(data.links);
+  const storedLinks: Links = await getLinksFromStorage();
   return storedLinks;
 }
-
-type LocalStorage = {
-  links: string;
-};
 
 type Link = {
   pathUrl: string;

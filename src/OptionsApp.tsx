@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
 import Header from './components/header/Header';
 import SupportButtons from './components/support-buttons/SupportButtons';
-import { getCurrentOptions, Options } from './functions/setup';
+import { getCurrentOptions } from './functions/setup';
 import {
   getLinksFromStorage,
+  Options,
   saveLinksToStorage,
-  saveUseSyncStorageToStorage,
+  saveOptionsToStorage,
 } from './functions/storage';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
 
   const changeOptions = async (options: Options) => {
+    debugger;
     const links = await getLinksFromStorage();
-    await saveUseSyncStorageToStorage(options);
+    await saveOptionsToStorage(options);
     await saveLinksToStorage(links);
     setOptions(options);
   };

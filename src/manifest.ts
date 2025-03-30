@@ -16,6 +16,10 @@ export function getManifest(browser: 'chrome' | 'firefox') {
       128: 'icon_128.png',
     },
     permissions: ['tabs', 'storage', 'contextMenus'],
+    options_ui: {
+      page: 'options.html',
+      open_in_tab: false
+    },
     background: isFirefox
       ? {
           scripts: ['background.js'],
