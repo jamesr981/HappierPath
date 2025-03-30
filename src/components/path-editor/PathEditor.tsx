@@ -36,7 +36,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
       .filter((z) => !!z);
 
     const jsonPaths: Links = { links: links };
-    
+
     saveLinksToStorage(jsonPaths);
     setLinks(jsonPaths);
   };

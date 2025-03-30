@@ -1,4 +1,4 @@
-import { getUseSyncStorage, getLinksFromStorage } from "./storage";
+import { getUseSyncStorage, getLinksFromStorage } from './storage';
 
 export const getCurrentTab = async () => {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -11,9 +11,9 @@ export const loadLinks = async () => {
 };
 
 export const getCurrentOptions = async (): Promise<Options> => {
-	return {
-	  useSyncStorage: await getUseSyncStorage(),
-	};
+  return {
+    useSyncStorage: await getUseSyncStorage(),
+  };
 };
 
 export interface Options {

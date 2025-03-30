@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import Header from './components/header/Header';
 import SupportButtons from './components/support-buttons/SupportButtons';
 import { getCurrentOptions, Options } from './functions/setup';
-import { getLinksFromStorage, saveLinksToStorage, saveUseSyncStorageToStorage } from './functions/storage';
+import {
+  getLinksFromStorage,
+  saveLinksToStorage,
+  saveUseSyncStorageToStorage,
+} from './functions/storage';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
