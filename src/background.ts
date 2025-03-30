@@ -4,7 +4,7 @@ import { getLinksFromStorage } from './functions/storage';
 const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
 async function createContextMenu() {
-  const links = await loadLinks();
+  const links = await getLinksFromStorage();
 
   Browser.contextMenus.removeAll();
   if (!links || !links.links.length) {
@@ -69,24 +69,10 @@ async function goPath(tab: Browser.Tabs.Tab, urlIndex: number) {
     return;
   }
 
-  const links = await loadLinks();
+  const links = await getLinksFromStorage();
   const link = links.links[urlIndex];
   if (!tab.url) return;
   const url = new URL(tab.url);
   const newUrl = `${url.protocol}//${url.hostname}${link.pathUrl}`;
   Browser.tabs.update(tab.id, { url: newUrl });
 }
-
-async function loadLinks(): Promise<Links> {
-  const storedLinks: Links = await getLinksFromStorage();
-  return storedLinks;
-}
-
-type Link = {
-  pathUrl: string;
-  pathName: string;
-};
-
-type Links = {
-  links: Link[];
-};
