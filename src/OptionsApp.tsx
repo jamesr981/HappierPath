@@ -30,7 +30,9 @@ const OptionsApp = () => {
 
   return (
     <>
-      <Header />
+      <div className="header">
+        <h3>Options</h3>
+      </div>
       <div
         style={{
           display: 'flex',
@@ -39,7 +41,7 @@ const OptionsApp = () => {
           padding: '10px 10px 20px 5px',
         }}
       >
-        <h2>Sync Paths To Account:</h2>
+        <h2>Sync Paths to Account:</h2>
         <input
           type="checkbox"
           checked={options.useSyncStorage}
