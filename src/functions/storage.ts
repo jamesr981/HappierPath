@@ -1,4 +1,5 @@
 import { Links } from '../types/Link';
+import { Options } from '../types/Options';
 import Browser from 'webextension-polyfill';
 
 export const getStorageType = async () => {
@@ -33,7 +34,3 @@ export const getOptionsFromStorage = async (): Promise<Options> => {
 export const saveOptionsToStorage = async (options: Options) => {
   await Browser.storage.sync.set({ options: options });
 };
-
-export interface Options {
-  useSyncStorage: boolean;
-}

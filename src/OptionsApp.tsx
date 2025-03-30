@@ -3,10 +3,10 @@ import SupportButtons from './components/support-buttons/SupportButtons';
 import {
   getLinksFromStorage,
   getOptionsFromStorage,
-  Options,
   saveLinksToStorage,
   saveOptionsToStorage,
 } from './functions/storage';
+import { Options } from './types/Options';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
