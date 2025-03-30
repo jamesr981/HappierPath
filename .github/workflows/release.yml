@@ -2,11 +2,10 @@ name: Build, Package, and Release HappierPath
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+    tags: ['v*']
   pull_request:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   build:
@@ -31,36 +30,62 @@ jobs:
       - name: Run ESLint check
         run: npm run lint
 
-      - name: Run build
-        run: npm run build-prod
+      - name: Build Chrome version
+        run: npm run build-prod-chrome
 
-      - name: 📖 Extract Version from manifest.json
-        id: get_version
+      - name: Zip Chrome build
         run: |
-          VERSION=$(jq -r '.version' dist/manifest.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Extracted version: $VERSION"
+          mkdir -p out
+          cd dist && zip -r ../out/HappierPath-chrome.zip .
 
-      - name: Package dist folder contents
+      - name: Clean dist
+        run: rm -rf dist
+
+      - name: Build Firefox version
+        run: npm run build-prod-firefox
+
+      - name: Zip Firefox build
         run: |
-          cd dist && zip -r ../HappierPath-v${{ env.VERSION }}.zip .
+          cd dist && zip -r ../out/HappierPath-firefox.zip .
 
-      - name: 📦 Upload build artifact
+      - name: 📦 Upload zipped packages
         uses: actions/upload-artifact@v4
         with:
-          name: HappierPath-v${{ env.VERSION }}
-          path: HappierPath-v${{ env.VERSION }}.zip
+          name: zipped-builds
+          path: out/
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Download zipped artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: zipped-builds
+          path: out
+
+      - name: Extract version from tag
+        id: extract_version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: 🚀 Create GitHub Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ env.VERSION }}
-          name: "HappierPath Release v${{ env.VERSION }}"
-          body: "📢 New version v${{ env.VERSION }} of HappierPath 🚀"
+          tag_name: ${{ github.ref_name }}
+          name: "HappierPath Release ${{ github.ref_name }}"
+          body: |
+            📢 New release of HappierPath!
+
+            - 🧩 Chrome extension
+            - 🦊 Firefox extension
           draft: false
           prerelease: false
-          files: HappierPath-v${{ env.VERSION }}.zip
+          files: |
+            out/HappierPath-chrome.zip
+            out/HappierPath-firefox.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

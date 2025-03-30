@@ -6,10 +6,11 @@ import InfoLink from '../info-link/InfoLink';
 import PathList from '../path-list/PathList';
 import { IsProtocol, Link, Protocol } from '../../types/Link';
 import { getCurrentTab } from '../../functions/setup';
+import Browser from 'webextension-polyfill';
 
 interface ManipulatorProps {
-  tab: chrome.tabs.Tab | undefined;
-  setCurrentTab: (tab: chrome.tabs.Tab | undefined) => void;
+  tab: Browser.Tabs.Tab | undefined;
+  setCurrentTab: (tab: Browser.Tabs.Tab | undefined) => void;
   url: URL | null;
   isEditorOpen: boolean;
   setIsEditorOpen: (val: boolean) => void;
@@ -55,22 +56,22 @@ const Manipulator = ({
 
     const handleTabUpdate = (
       updatedTabId: number,
-      changeInfo: chrome.tabs.TabChangeInfo
+      changeInfo: Browser.Tabs.OnUpdatedChangeInfoType
     ) => {
       if (updatedTabId === tab?.id && changeInfo.status === 'complete') {
-        chrome.tabs.onUpdated.removeListener(handleTabUpdate); // Cleanup listener
+        Browser.tabs.onUpdated.removeListener(handleTabUpdate); // Cleanup listener
         getCurrentTab().then((tab) => {
           setCurrentTab(tab);
         });
       }
     };
 
-    chrome.tabs.onUpdated.addListener(handleTabUpdate);
+    Browser.tabs.onUpdated.addListener(handleTabUpdate);
 
     if (newTab || !tab?.id) {
-      chrome.tabs.create({ url: newUrl });
+      Browser.tabs.create({ url: newUrl });
     } else {
-      chrome.tabs.update(tab.id, { url: newUrl });
+      Browser.tabs.update(tab.id, { url: newUrl });
     }
   };
 
