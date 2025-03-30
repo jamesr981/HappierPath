@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import Header from './components/header/Header';
 import SupportButtons from './components/support-buttons/SupportButtons';
-import { getCurrentOptions } from './functions/setup';
 import {
   getLinksFromStorage,
+  getOptionsFromStorage,
   Options,
   saveLinksToStorage,
   saveOptionsToStorage,
@@ -21,7 +20,7 @@ const OptionsApp = () => {
 
   useEffect(() => {
     const asyncSetup = async () => {
-      const options: Options = await getCurrentOptions();
+      const options: Options = await getOptionsFromStorage();
       setOptions(options);
     };
 

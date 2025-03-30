@@ -18,7 +18,7 @@ export function getManifest(browser: 'chrome' | 'firefox') {
     permissions: ['tabs', 'storage', 'contextMenus'],
     options_ui: {
       page: 'options.html',
-      open_in_tab: false
+      open_in_tab: false,
     },
     background: isFirefox
       ? {
