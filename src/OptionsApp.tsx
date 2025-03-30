@@ -13,7 +13,6 @@ const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
 
   const changeOptions = async (options: Options) => {
-    debugger;
     const links = await getLinksFromStorage();
     await saveOptionsToStorage(options);
     await saveLinksToStorage(links);
