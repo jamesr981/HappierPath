@@ -23,6 +23,7 @@ export function getManifest(browser: 'chrome' | 'firefox') {
         }
       : {
           service_worker: 'background.js',
+          type: 'module',
         },
     browser_specific_settings: {
       gecko: {
