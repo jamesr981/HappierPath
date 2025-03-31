@@ -2,13 +2,13 @@ import { defineConfig, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
-import { getManifest } from './src/manifest';
+import { getManifest, ManifestOptions } from './src/manifest';
 
-function ManifestPlugin(browser: 'chrome' | 'firefox'): Plugin {
+function ManifestPlugin(options: ManifestOptions}): Plugin {
   return {
     name: 'generate-manifest',
     generateBundle() {
-      const manifest = getManifest(browser);
+      const manifest = getManifest(options);
       const outPath = path.resolve(__dirname, 'dist', 'manifest.json');
       fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2));
       console.log(`✅ Manifest written to: ${outPath}`);
@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      ManifestPlugin(browser)
+      ManifestPlugin({browser: browser, mode: mode})
     ],
     build: {
       outDir: 'dist',
