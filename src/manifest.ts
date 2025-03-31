@@ -1,5 +1,12 @@
-export function getManifest(browser: 'chrome' | 'firefox') {
+export interface ManifestOptions {
+  mode: string;
+  browser: 'chrome' | 'firefox';
+}
+
+export function getManifest({ mode, browser }: ManifestOptions) {
   const isFirefox = browser === 'firefox';
+  const isChrome = browser === 'chrome';
+  const isDebug = mode === 'development';
 
   return {
     manifest_version: 3,
@@ -16,6 +23,7 @@ export function getManifest(browser: 'chrome' | 'firefox') {
       128: 'icon_128.png',
     },
     permissions: ['tabs', 'storage', 'contextMenus'],
+    //Firefox doesn't support service workers yet. It is ok to use manifest v2 background scripts here
     background: isFirefox
       ? {
           scripts: ['background.js'],
@@ -31,5 +39,10 @@ export function getManifest(browser: 'chrome' | 'firefox') {
         strict_min_version: '112.0',
       },
     },
+    //Public Key for identifying this extension for Chrome debug only. The webstore manages this in production
+    ...(isDebug &&
+      isChrome && {
+        key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqNNHLpYsijqxBZzS0jAvEhdUhRhYh4PWRDOUBiHIrDZp9/EOL+mrc4djvS5pQMVKB7An7xVnF80KuWHFFFf1Oykgyl3flrK+ymABi1c5sbdMekf4GmJsTLf2AUbC0ZXGYRu4tzkof81Ndp83dPWGWELQNqFbVksxRJAjM7jVxru/eNyOedoYdo88J4NWYbymKgb7AnNqfCR59UGO4vl3tggPzQaGMPpcjB3owTDlNTAW/4p5IQrfwx6oo5n9iRO/SQdXdzgBNoR1BBcPM/ssf8VjmGWfdBx+Xf7lfrAirgeAIikdF8h+6aXQnVYH88ObmA7QiT486NXalhkDPmh5bQIDAQAB',
+      }),
   };
 }
