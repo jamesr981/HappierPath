@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { getManifest, ManifestOptions } from './src/manifest';
 
-function ManifestPlugin(options: ManifestOptions}): Plugin {
+function ManifestPlugin(options: ManifestOptions): Plugin {
   return {
     name: 'generate-manifest',
     generateBundle() {
