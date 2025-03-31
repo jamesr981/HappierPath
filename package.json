@@ -13,7 +13,7 @@
     "prettier": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\""
   },
   "dependencies": {
-    "react": "^19.0.0",
+    "react": "^19.1.0",
     "react-dom": "^19.0.0",
     "webextension-polyfill": "^0.12.0"
   },
