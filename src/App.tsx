@@ -3,9 +3,10 @@ import Header from './components/header/Header';
 import PathEditor from './components/path-editor/PathEditor';
 import SupportButtons from './components/support-buttons/SupportButtons';
 import Manipulator from './components/manipulator/Manipulator';
-import { loadLinks, getCurrentTab } from './functions/setup';
+import { getCurrentTab } from './functions/setup';
 import { Links } from './types/Link';
 import Browser from 'webextension-polyfill';
+import { getLinksFromStorage } from './functions/storage';
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState<Browser.Tabs.Tab>();
@@ -24,7 +25,7 @@ const App = () => {
 
   useEffect(() => {
     const asyncLoadLinks = async () => {
-      const links = await loadLinks();
+      const links = await getLinksFromStorage();
       setLinks(links);
     };
     asyncLoadLinks();

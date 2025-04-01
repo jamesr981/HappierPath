@@ -23,6 +23,10 @@ export function getManifest({ mode, browser }: ManifestOptions) {
       128: 'icon_128.png',
     },
     permissions: ['tabs', 'storage', 'contextMenus'],
+    options_ui: {
+      page: 'options.html',
+      open_in_tab: false,
+    },
     //Firefox doesn't support service workers yet. It is ok to use manifest v2 background scripts here
     background: isFirefox
       ? {

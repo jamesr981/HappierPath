@@ -1,9 +1,10 @@
 import Browser from 'webextension-polyfill';
+import { getLinksFromStorage } from './functions/storage';
 
 const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
 async function createContextMenu() {
-  const links = await loadLinks();
+  const links = await getLinksFromStorage();
 
   Browser.contextMenus.removeAll();
   if (!links || !links.links.length) {
@@ -68,31 +69,10 @@ async function goPath(tab: Browser.Tabs.Tab, urlIndex: number) {
     return;
   }
 
-  const links = await loadLinks();
+  const links = await getLinksFromStorage();
   const link = links.links[urlIndex];
   if (!tab.url) return;
   const url = new URL(tab.url);
   const newUrl = `${url.protocol}//${url.hostname}${link.pathUrl}`;
   Browser.tabs.update(tab.id, { url: newUrl });
 }
-
-async function loadLinks(): Promise<Links> {
-  const data = (await Browser.storage.local.get(['links'])) as LocalStorage;
-  if (!data?.links?.length) return { links: [] };
-
-  const storedLinks: Links = JSON.parse(data.links);
-  return storedLinks;
-}
-
-type LocalStorage = {
-  links: string;
-};
-
-type Link = {
-  pathUrl: string;
-  pathName: string;
-};
-
-type Links = {
-  links: Link[];
-};

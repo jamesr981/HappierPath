@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, Links } from '../../types/Link';
-import { saveLinks } from '../../functions/setup';
+import { saveLinksToStorage } from '../../functions/storage';
 
 interface PathEditorProps {
   links: Links;
@@ -36,7 +36,8 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
       .filter((z) => !!z);
 
     const jsonPaths: Links = { links: links };
-    saveLinks(jsonPaths);
+
+    saveLinksToStorage(jsonPaths);
     setLinks(jsonPaths);
   };
 
