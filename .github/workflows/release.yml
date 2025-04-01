@@ -77,11 +77,6 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: "HappierPath Release ${{ github.ref_name }}"
-          body: |
-            📢 New release of HappierPath!
-
-            - 🧩 Chrome extension
-            - 🦊 Firefox extension
           draft: false
           prerelease: false
           files: |
