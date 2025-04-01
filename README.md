@@ -1,6 +1,6 @@
 Based on [HappyPath](https://github.com/gcLabs/HappyPath)
 I've created this fork as Google has begun removing Manifest V2 extensions from Google.
-This fork updates HappyPath to be compilant in Manifest V3.
+This fork updates HappyPath to be compliant in Manifest V3.
 
 Thank you [gcLabs](https://github.com/gcLabs) for creating the original extension. This has saved me and my company countless hours.
 
