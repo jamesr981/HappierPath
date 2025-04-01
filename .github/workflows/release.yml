@@ -44,6 +44,9 @@ jobs:
       - name: Build Firefox version
         run: npm run build-prod-firefox
 
+      - name: Lint FireFox 
+        run: npm run addon-lint:firefox 
+
       - name: Zip Firefox build
         run: |
           cd dist && zip -r ../out/HappierPath-firefox.zip .
