@@ -39,24 +39,44 @@ Configure>/search/howsearchworks
 * This works because google.com and google.com.au share the same route structure. A traditional bookmark will also store the FQDN, which isn't useful when you have many websites that share the same route structure
 
 ## Change Log
+CHANGES IN VERSION 4.3.0
+
+Extension Options menu
+
+Change Requests:
+
+* Option to sync config paths to your browser account.
+  * FireFox sync depends on what is configured in FireFox settings. Default sync should be 5 minutes
+
+Bug Fixes:
+* Go button overflowing to new line on FireFox
+
 CHANGES IN VERSION 4.2.0
+
 Added support for FireFox
 
 CHANGES IN VERSION 4.1.0
+
 Added Context menu for quick navigation
 
 CHANGES IN VERSION 4.0.0
+
 Migrated code to React/Typescript
 
 CHANGES IN VERSION 3.0:
+
 Bug fixes
+
 Updated for Chrome extension compliance
 
 CHANGES IN VERSION 2.2:
+
 RegEx transformations: You can now add a RegEx transformation in this format:
 `{Label}>{RegEx URL match}<<<{Link to generate (with option attributes in this format: $n)}`
+
 For example:
 `Edit this page>(\/pages\/?id=)([0-9]{1,9}).*<<</editpage/?id=$2`
+
 If HappierPath finds a RegEx match on the current URL, it will create a link using the transformation path.
 
 ## To do (in no particular order):
