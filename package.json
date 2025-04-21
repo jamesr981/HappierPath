@@ -22,7 +22,7 @@
     "@eslint/js": "^9.24.0",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.1",
+    "@types/react-dom": "^19.1.2",
     "@types/webextension-polyfill": "^0.12.3",
     "@vitejs/plugin-react": "^4.3.4",
     "addons-linter": "^7.11.0",
