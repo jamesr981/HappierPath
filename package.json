@@ -24,7 +24,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/webextension-polyfill": "^0.12.3",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^4.4.1",
     "addons-linter": "^7.11.0",
     "autoprefixer": "^10.4.21",
     "cross-env": "^7.0.3",
