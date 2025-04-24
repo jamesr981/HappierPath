@@ -1,5 +1,6 @@
 import Browser from 'webextension-polyfill';
 import { getLinksFromStorage } from './functions/storage';
+import { Links } from './types/Link';
 
 const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
@@ -35,11 +36,17 @@ Browser.runtime.onInstalled.addListener(() => {
   createContextMenu();
 });
 
-Browser.storage.onChanged.addListener((changes) => {
-  if (changes.links) {
-    createContextMenu();
-  }
-});
+const onStorageChange = (
+  changes: Browser.Storage.StorageAreaOnChangedChangesType
+) => {
+  const newValue: Links = JSON.parse(changes.json.newValue as string);
+
+  if (!newValue?.links) return;
+  createContextMenu();
+};
+
+Browser.storage.local.onChanged.addListener(onStorageChange);
+Browser.storage.sync.onChanged.addListener(onStorageChange);
 
 Browser.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab || !tab.id) return;
