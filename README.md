@@ -31,6 +31,7 @@ Configure>/search/howsearchworks
 ```
 
 * Click Write Path List
+* Click Close Path Editor
 * The path list will update. It should contain 1 heading, and 2 relative links
 * Navigate to `https://google.com`
 * Clicking either link will take you to the appropriate page without changing the FQDN
