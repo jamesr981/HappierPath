@@ -40,7 +40,7 @@ export function getManifest({ mode, browser }: ManifestOptions) {
     browser_specific_settings: {
       gecko: {
         id: 'addon@happierpath.dev',
-        strict_min_version: '4.3.3',
+        strict_min_version: '112.0',
       },
     },
     //Public Key for identifying this extension for Chrome debug only. The webstore manages this in production
