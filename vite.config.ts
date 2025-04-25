@@ -10,7 +10,7 @@ function ManifestPlugin(options: ManifestOptions): Plugin {
     generateBundle() {
       const manifest = getManifest(options);
       const outPath = path.resolve(__dirname, 'dist', 'manifest.json');
-      fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2));
+      fs.writeFileSync(outPath, JSON.stringify(manifest));
       console.log(`✅ Manifest written to: ${outPath}`);
     }
   };
@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           popup: 'popup.html',
-	  options: 'options.html',
+          options: 'options.html',
           background: 'src/background.ts'
         },
         output: {
