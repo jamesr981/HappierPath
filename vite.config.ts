@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           popup: 'popup.html',
-	        options: 'options.html',
+          options: 'options.html',
           background: 'src/background.ts'
         },
         output: {
