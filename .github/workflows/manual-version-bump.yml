@@ -28,13 +28,15 @@ jobs:
       - name: Bump version in package.json
         run: npm version ${{ github.event.inputs.bump || 'patch' }} --no-git-tag-version
 
-      - name: Update version in manifest.ts
+        - name: Update version in manifest.ts
         id: update_manifest
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "New version: $VERSION"
-          sed -i "s/version: *['\"][^'\"]*['\"]/version: '$VERSION'/" src/manifest.ts
+          # Only replace the exact line starting with 'version:'
+          sed -i "/^[[:space:]]*version:[[:space:]]*['\"][^'\"]*['\"]/s/version: *['\"][^'\"]*['\"]/version: '$VERSION'/" src/manifest.ts
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+      
 
       - name: Create Pull Request
         id: create_pr
