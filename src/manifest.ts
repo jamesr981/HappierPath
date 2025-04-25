@@ -11,7 +11,7 @@ export function getManifest({ mode, browser }: ManifestOptions) {
   return {
     manifest_version: 3,
     name: 'HappierPath',
-    version: '4.3.2',
+    version: '4.3.3',
     description: '... because everything is still relative.',
     action: {
       default_icon: 'icon_16.png',
@@ -40,7 +40,7 @@ export function getManifest({ mode, browser }: ManifestOptions) {
     browser_specific_settings: {
       gecko: {
         id: 'addon@happierpath.dev',
-        strict_min_version: '112.0',
+        strict_min_version: '4.3.3',
       },
     },
     //Public Key for identifying this extension for Chrome debug only. The webstore manages this in production
