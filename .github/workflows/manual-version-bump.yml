@@ -36,28 +36,24 @@ jobs:
           sed -i "s/version: *['\"][^'\"]*['\"]/version: '$VERSION'/" src/manifest.ts
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Create branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b bump-version-${{ steps.update_manifest.outputs.version }}
-          git add package.json package-lock.json src/manifest.ts
-          git commit -m "chore: bump version to ${{ steps.update_manifest.outputs.version }}"
-          git push origin bump-version-${{ steps.update_manifest.outputs.version }}
-
       - name: Create Pull Request
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: bump version to ${{ steps.update_manifest.outputs.version }}"
           branch: bump-version-${{ steps.update_manifest.outputs.version }}
           title: "chore: bump version to ${{ steps.update_manifest.outputs.version }}"
           body: "This PR bumps the version to ${{ steps.update_manifest.outputs.version }}"
           base: master
           labels: |
             version-bump
+          add-paths: |
+            package.json
+            package-lock.json
+            src/manifest.ts
 
-      - name: Auto-merge PR
+      - name: Auto-merge PR (optional)
         if: steps.create_pr.outputs.pull-request-url != ''
         run: gh pr merge ${{ steps.create_pr.outputs.pull-request-url }} --auto --merge
         env:
