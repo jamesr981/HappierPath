@@ -75,7 +75,8 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
         </Button>
       </Stack>
       <Typography variant="body2" sx={{ mb: 1 }}>
-        Use the format "Name&gt;URL", with a new line separating each entry, e.g. "Example Name&gt;/example/path/". If you want your line to be a title (i.e. not go anywhere), make the path "0", e.g. "Example Title&gt;0".
+        Heading - This is a heading&gt;0<br/>
+        Link - This is a link&gt;/example/path
       </Typography>
       <TextField
         id="jsonIO"
