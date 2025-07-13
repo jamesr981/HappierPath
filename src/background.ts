@@ -39,7 +39,9 @@ Browser.runtime.onInstalled.addListener(() => {
 const onStorageChange = (
   changes: Browser.Storage.StorageAreaOnChangedChangesType
 ) => {
-  const newValue: Links = changes.json.newValue ? JSON.parse(changes.json.newValue as string) : {links: []};
+  const newValue: Links = changes.json.newValue
+    ? JSON.parse(changes.json.newValue as string)
+    : { links: [] };
 
   if (!newValue?.links) return;
   createContextMenu();
