@@ -1,7 +1,9 @@
 import { Box, Typography, IconButton, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
 
 const Header = () => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -10,9 +12,9 @@ const Header = () => {
         justifyContent: 'space-between',
         mb: 1,
         p: '8px 12px',
-        backgroundColor: 'primary.main',
+        backgroundColor: theme.palette.primary.main,
         borderRadius: 1,
-        color: 'white',
+        color: theme.palette.primary.contrastText,
         minHeight: 0,
       }}
     >
@@ -32,6 +34,7 @@ const Header = () => {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            color: theme.palette.primary.contrastText,
           }}
         >
           ... because everything is still relative
@@ -41,7 +44,7 @@ const Header = () => {
         size="small"
         onClick={() => window.close()}
         sx={{
-          color: 'white',
+          color: theme.palette.getContrastText(theme.palette.error.main),
           backgroundColor: 'error.main',
           '&:hover': {
             backgroundColor: 'error.dark',

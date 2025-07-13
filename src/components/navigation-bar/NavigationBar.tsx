@@ -63,7 +63,12 @@ const NavigationBar = ({
         size="small"
         value={hostname}
         onChange={(e) => setHostname(e.target.value)}
-        sx={{ minWidth: 180 }}
+        sx={{ 
+          minWidth: 180,
+          '& .MuiInputBase-root': {
+            backgroundColor: 'background.paper',
+          }
+        }}
       />
       <Button
         

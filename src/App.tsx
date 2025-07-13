@@ -52,7 +52,7 @@ const App = () => {
           width: 410,
           mx: 'auto',
           p: '4px',
-          bgcolor: '#f9f9f9',
+          bgcolor: 'background.default',
         }}
       >
         <Header />

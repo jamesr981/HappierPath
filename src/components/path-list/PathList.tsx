@@ -29,7 +29,7 @@ const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
               <ListItem key={index} disableGutters sx={{ pl: 0, py: 0.1 }}>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 600, color: '#444' }}
+                  sx={{ fontWeight: 600, color: 'text.secondary' }}
                 >
                   {result.content}
                 </Typography>

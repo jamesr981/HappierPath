@@ -95,7 +95,13 @@ Link - This is a link>/example/path`}
           maxRows={16}
           fullWidth
           variant="outlined"
-          sx={{ fontFamily: 'monospace', fontSize: 13 }}
+          sx={{ 
+            fontFamily: 'monospace', 
+            fontSize: 13,
+            '& .MuiInputBase-root': {
+              backgroundColor: 'background.paper',
+            }
+          }}
         />
       </Paper>
 

@@ -20,15 +20,18 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import { useTheme } from './contexts/ThemeContext';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false, theme: 'light' });
+  const { setTheme } = useTheme();
 
   const changeOptions = async (options: Options) => {
     const links = await getLinksFromStorage();
     await saveOptionsToStorage(options);
     await saveLinksToStorage(links);
     setOptions(options);
+    setTheme(options.theme);
   };
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const OptionsApp = () => {
         sx={{
           width: 410,
           mx: 'auto',
-          bgcolor: '#f9f9f9',
+          bgcolor: 'background.default',
           p: 2,
         }}
       >

@@ -7,7 +7,7 @@ interface InfoProps {
 
 const Info = ({ url }: InfoProps) => {
   return (
-    <Paper elevation={2} sx={{ p: 1.2, mb: 2, backgroundColor: '#f9f9f9' }}>
+    <Paper elevation={2} sx={{ p: 1.2, mb: 2 }}>
       <Stack spacing={0}>
         <InfoRow
           label="Protocol"

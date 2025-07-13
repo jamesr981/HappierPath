@@ -16,7 +16,7 @@ const LinkButton = ({ link, buttonText }: LinkButtonProps) => {
       variant="contained"
       color="primary"
       size="small"
-      sx={{ mr: 1, textTransform: 'none', fontWeight: 500 }}
+      sx={{ mr: 1 }}
     >
       {buttonText}
     </Button>
