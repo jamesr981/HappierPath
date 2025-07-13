@@ -1,3 +1,4 @@
+import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Stack } from '@mui/material';
 import { IsProtocol, Protocol } from '../../types/Link';
 
 interface NavigationBarProps {
@@ -28,39 +29,46 @@ const NavigationBar = ({
 
   const onProtocolChange = (value: string) => {
     if (!IsProtocol(value)) return;
-
     const protocol = value as Protocol;
     setSelectedProtocol(protocol);
   };
 
   return (
-    <>
-      <label htmlFor="currentDomain">Domain:</label>
-      <select
-        name="protocolSelector"
-        id="protocolSelector"
-        value={selectedProtocol}
-        onChange={(e) => onProtocolChange(e.currentTarget.value)}
-        style={{ marginRight: '8px' }}
-      >
-        <option value="http://">http://</option>
-        <option value="https://">https://</option>
-        <option value="ftp://">ftp://</option>
-      </select>
-      <input
-        type="text"
-        name="currentDomain"
+    <Stack direction="row" alignItems="center" spacing={1} mb={1}>
+      <FormControl size="small" sx={{ minWidth: 90 }}>
+        <InputLabel id="protocolSelector-label">Protocol</InputLabel>
+        <Select
+          labelId="protocolSelector-label"
+          id="protocolSelector"
+          value={selectedProtocol}
+          label="Protocol"
+          onChange={(e) => onProtocolChange(e.target.value)}
+        >
+          <MenuItem value="http://">http://</MenuItem>
+          <MenuItem value="https://">https://</MenuItem>
+          <MenuItem value="ftp://">ftp://</MenuItem>
+        </Select>
+      </FormControl>
+      <TextField
         id="currentDomain"
-        size={38}
+        label="Domain"
+        variant="outlined"
+        size="small"
         value={hostname}
         onChange={(e) => setHostname(e.target.value)}
-        style={{ marginRight: '8px' }}
+        sx={{ minWidth: 180 }}
       />
-      <button id="pathGo" onClick={onGoClicked}>
+      <Button
+        id="pathGo"
+        variant="contained"
+        color="primary"
+        size="small"
+        onClick={onGoClicked}
+        sx={{ minWidth: 56 }}
+      >
         GO!
-      </button>
-      <br />
-    </>
+      </Button>
+    </Stack>
   );
 };
 
