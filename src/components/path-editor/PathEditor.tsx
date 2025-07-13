@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Link, Links } from '../../types/Link';
+import { useEffect, useState } from 'react';
+import { Links } from '../../types/Link';
 import { saveLinksToStorage } from '../../functions/storage';
 import { Paper, Typography, Button, TextField, Stack } from '@mui/material';
+import { ConfirmationDialog, ErrorSnackbar } from '../common';
+import { parseLinksFromText, formatLinksToText } from '../../utils/validation';
+import { useDialog, useSnackbar } from '../../hooks';
 
 interface PathEditorProps {
   links: Links;
@@ -10,99 +13,110 @@ interface PathEditorProps {
 
 const PathEditor = ({ links, setLinks }: PathEditorProps) => {
   const [editorText, setEditorText] = useState('');
+  const [pendingLinks, setPendingLinks] = useState<Links | null>(null);
+  
+  const confirmDialog = useDialog();
+  const errorSnackbar = useSnackbar();
+
   const onJsonWriteClick = () => {
-    // If there is no editor text, do nothing
     if (!editorText) return;
 
-    if (
-      !confirm(
-        'This will replace your existing stored values with your new values in the edit box.\n\n Are you sure?'
-      )
-    ) {
+    const validationResult = parseLinksFromText(editorText);
+    
+    if (!validationResult.isValid) {
+      errorSnackbar.showError(validationResult.errors.join('\n'));
       return;
     }
 
-    const arrayInput = editorText.split('\n');
-    const links: Link[] = arrayInput
-      .map((input, index) => {
-        const count = index + 1;
-        if (input.indexOf('>', 0) < 1) {
-          alert(`Link on line ${count} malformed - ignored!`);
-          return;
-        }
-
-        const inputPair = input.split('>');
-        return { pathName: inputPair[0], pathUrl: inputPair[1] };
-      })
-      .filter((z) => !!z);
-
-    const jsonPaths: Links = { links: links };
-
-    saveLinksToStorage(jsonPaths);
-    setLinks(jsonPaths);
+    const jsonPaths: Links = { links: validationResult.parsedLinks };
+    setPendingLinks(jsonPaths);
+    confirmDialog.open();
   };
 
-  const getLinkString = useCallback(() => {
-    let stringLinks = '';
-    links.links.forEach((link) => {
-      stringLinks += `${link.pathName}>${link.pathUrl}\n`;
-    });
+  const handleConfirmWrite = () => {
+    if (pendingLinks) {
+      saveLinksToStorage(pendingLinks);
+      setLinks(pendingLinks);
+    }
+    confirmDialog.close();
+    setPendingLinks(null);
+  };
 
-    return stringLinks.substring(0, stringLinks.length - 1);
-  }, [links]);
+  const handleCancelWrite = () => {
+    confirmDialog.close();
+    setPendingLinks(null);
+  };
 
   const onJsonReadClick = () => {
-    const linkString = getLinkString();
+    const linkString = formatLinksToText(links.links);
     setEditorText(linkString);
   };
 
   useEffect(() => {
-    const linkString = getLinkString();
+    const linkString = formatLinksToText(links.links);
     setEditorText(linkString);
-  }, [links, getLinkString]);
+  }, [links]);
 
   return (
-    <Paper sx={{ p: '8px', mb: 2 }} elevation={1} id="editPaths">
-      <Typography
-        variant="subtitle2"
-        sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}
-      >
-        Path Editor
-      </Typography>
-      <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={onJsonReadClick}
-          id="jsonRead"
+    <>
+      <Paper sx={{ p: '8px', mb: 2 }} elevation={1} id="editPaths">
+        <Typography
+          variant="subtitle2"
+          sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}
         >
-          Read Path List
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={onJsonWriteClick}
-          id="jsonWrite"
-        >
-          Write Path List
-        </Button>
-      </Stack>
-      <Typography variant="body2" sx={{ mb: 1, whiteSpace: 'pre-line' }}>
-        {`Heading - This is a heading>0
+          Path Editor
+        </Typography>
+        <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={onJsonReadClick}
+            id="jsonRead"
+          >
+            Read Path List
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onJsonWriteClick}
+            id="jsonWrite"
+          >
+            Write Path List
+          </Button>
+        </Stack>
+        <Typography variant="body2" sx={{ mb: 1, whiteSpace: 'pre-line' }}>
+          {`Heading - This is a heading>0
 Link - This is a link>/example/path`}
-      </Typography>
-      <TextField
-        id="jsonIO"
-        value={editorText}
-        onChange={(e) => setEditorText(e.target.value)}
-        multiline
-        minRows={8}
-        maxRows={16}
-        fullWidth
-        variant="outlined"
-        sx={{ fontFamily: 'monospace', fontSize: 13 }}
+        </Typography>
+        <TextField
+          id="jsonIO"
+          value={editorText}
+          onChange={(e) => setEditorText(e.target.value)}
+          multiline
+          minRows={8}
+          maxRows={16}
+          fullWidth
+          variant="outlined"
+          sx={{ fontFamily: 'monospace', fontSize: 13 }}
+        />
+      </Paper>
+
+      <ConfirmationDialog
+        open={confirmDialog.isOpen}
+        title="Confirm Path List Update"
+        message="This will replace your existing stored values with your new values in the edit box.\n\nAre you sure you want to continue?"
+        onConfirm={handleConfirmWrite}
+        onCancel={handleCancelWrite}
+        severity="warning"
       />
-    </Paper>
+
+      <ErrorSnackbar
+        open={errorSnackbar.isOpen}
+        message={errorSnackbar.message}
+        severity={errorSnackbar.severity}
+        onClose={errorSnackbar.close}
+      />
+    </>
   );
 };
 
