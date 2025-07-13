@@ -7,6 +7,7 @@ import {
   saveOptionsToStorage,
 } from './functions/storage';
 import { Options } from './types/Options';
+import { ThemeMode } from './types/ThemeMode';
 import {
   Box,
   Typography,
@@ -23,7 +24,7 @@ import {
 import { useTheme } from './contexts/ThemeContext';
 
 const OptionsApp = () => {
-  const [options, setOptions] = useState<Options>({ useSyncStorage: false, theme: 'light' });
+  const [options, setOptions] = useState<Options>({ useSyncStorage: false, theme: 'light' as ThemeMode });
   const { setTheme } = useTheme();
 
   const changeOptions = async (options: Options) => {
@@ -94,7 +95,7 @@ const OptionsApp = () => {
                   onChange={(e) =>
                     changeOptions({
                       ...options,
-                      theme: e.target.value as 'light' | 'dark',
+                      theme: e.target.value as ThemeMode,
                     })
                   }
                 >
