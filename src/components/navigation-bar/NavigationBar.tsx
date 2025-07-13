@@ -1,4 +1,12 @@
-import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Stack } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  Button,
+  Stack,
+} from '@mui/material';
 import { IsProtocol, Protocol } from '../../types/Link';
 
 interface NavigationBarProps {

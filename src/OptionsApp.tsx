@@ -7,7 +7,15 @@ import {
   saveOptionsToStorage,
 } from './functions/storage';
 import { Options } from './types/Options';
-import { Box, Typography, Paper, Stack, Checkbox, FormControlLabel, CssBaseline } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Paper,
+  Stack,
+  Checkbox,
+  FormControlLabel,
+  CssBaseline,
+} from '@mui/material';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
@@ -31,7 +39,15 @@ const OptionsApp = () => {
   return (
     <>
       <CssBaseline />
-      <Box sx={{ width: 410, minHeight: '100vh', mx: 'auto', bgcolor: '#f9f9f9', p: 2 }}>
+      <Box
+        sx={{
+          width: 410,
+          minHeight: '100vh',
+          mx: 'auto',
+          bgcolor: '#f9f9f9',
+          p: 2,
+        }}
+      >
         <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
           Options
         </Typography>

@@ -15,7 +15,10 @@ interface PathListProps {
 const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
   return (
     <Paper sx={{ p: '8px', mb: 2 }} elevation={1} id="pathList">
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}>
+      <Typography
+        variant="subtitle2"
+        sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}
+      >
         Select your path:
       </Typography>
       <List dense disablePadding>
@@ -24,7 +27,10 @@ const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
           if (result.isTitle) {
             return (
               <ListItem key={index} disableGutters sx={{ pl: 0, py: 0.1 }}>
-                <Typography variant="body2" sx={{ fontWeight: 600, color: '#444' }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 600, color: '#444' }}
+                >
                   {result.content}
                 </Typography>
               </ListItem>

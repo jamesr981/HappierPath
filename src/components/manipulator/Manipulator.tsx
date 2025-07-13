@@ -86,7 +86,16 @@ const Manipulator = ({
         setHostname={setHostname}
         onNavigateLinkClick={onNavigateLinkClick}
       />
-      <Box className="tools" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+      <Box
+        className="tools"
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
         <ToggleLink
           setToggle={setIsEditorOpen}
           toggle={isEditorOpen}
@@ -95,7 +104,7 @@ const Manipulator = ({
         />
         <InfoLink isInfoShown={isInfoShown} setIsInfoShown={setIsInfoShown} />
       </Box>
-      
+
       {(isInfoShown && <Info url={url} />) || null}
 
       {(!isEditorOpen && (

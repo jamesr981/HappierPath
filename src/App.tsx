@@ -47,7 +47,15 @@ const App = () => {
   return (
     <>
       <CssBaseline />
-      <Box sx={{ width: 410, minHeight: '100vh', mx: 'auto', p:'4px', bgcolor: '#f9f9f9' }}>
+      <Box
+        sx={{
+          width: 410,
+          minHeight: '100vh',
+          mx: 'auto',
+          p: '4px',
+          bgcolor: '#f9f9f9',
+        }}
+      >
         <Header />
 
         <Manipulator

@@ -67,15 +67,26 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
         Path Editor
       </Typography>
       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-        <Button variant="outlined" color="primary" onClick={onJsonReadClick} id="jsonRead">
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={onJsonReadClick}
+          id="jsonRead"
+        >
           Read Path List
         </Button>
-        <Button variant="contained" color="primary" onClick={onJsonWriteClick} id="jsonWrite">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onJsonWriteClick}
+          id="jsonWrite"
+        >
           Write Path List
         </Button>
       </Stack>
       <Typography variant="body2" sx={{ mb: 1 }}>
-        Heading - This is a heading&gt;0<br/>
+        Heading - This is a heading&gt;0
+        <br />
         Link - This is a link&gt;/example/path
       </Typography>
       <TextField

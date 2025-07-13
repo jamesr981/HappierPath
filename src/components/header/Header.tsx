@@ -17,10 +17,23 @@ const Header = () => {
       }}
     >
       <Stack spacing={0} sx={{ minWidth: 0 }}>
-        <Typography variant="h6" component="h1" sx={{ fontWeight: 'bold', lineHeight: 1.1 }}>
+        <Typography
+          variant="h6"
+          component="h1"
+          sx={{ fontWeight: 'bold', lineHeight: 1.1 }}
+        >
           HappierPath
         </Typography>
-        <Typography variant="body2" sx={{ fontStyle: 'italic', lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <Typography
+          variant="body2"
+          sx={{
+            fontStyle: 'italic',
+            lineHeight: 1.1,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
           ... because everything is still relative
         </Typography>
       </Stack>
