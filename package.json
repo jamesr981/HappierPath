@@ -24,7 +24,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/webextension-polyfill": "^0.12.3",
-    "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-react": "^4.6.0",
     "addons-linter": "^7.11.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.25.1",
@@ -34,6 +34,6 @@
     "prettier": "^3.5.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^6.3.2"
+    "vite": "^7.0.4"
   }
 }
