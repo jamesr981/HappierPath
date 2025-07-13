@@ -7,18 +7,3 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 }
-
-p,
-label {
-  margin: 0;
-  padding: 2px;
-}
-
-#manipulator {
-  margin-top: 4px;
-}
-
-select,
-input {
-  font-size: 12px;
-}
