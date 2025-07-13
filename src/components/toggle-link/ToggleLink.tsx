@@ -15,7 +15,6 @@ const ToggleLink = ({
 }: ToggleLinkProps) => {
   return (
     <Button
-      id="togglePathEditor"
       variant="text"
       size="small"
       onClick={() => setToggle(!toggle)}

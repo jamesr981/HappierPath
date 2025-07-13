@@ -59,7 +59,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
 
   return (
     <>
-      <Paper sx={{ p: '8px', mb: 2 }} elevation={1} id="editPaths">
+      <Paper sx={{ p: '8px', mb: 2 }} elevation={1}>
         <Typography
           variant="subtitle2"
           sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}
@@ -71,7 +71,6 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
             variant="outlined"
             color="primary"
             onClick={onJsonReadClick}
-            id="jsonRead"
           >
             Read Path List
           </Button>
@@ -79,7 +78,6 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
             variant="contained"
             color="primary"
             onClick={onJsonWriteClick}
-            id="jsonWrite"
           >
             Write Path List
           </Button>
@@ -89,7 +87,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
 Link - This is a link>/example/path`}
         </Typography>
         <TextField
-          id="jsonIO"
+          
           value={editorText}
           onChange={(e) => setEditorText(e.target.value)}
           multiline

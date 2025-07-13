@@ -14,7 +14,7 @@ interface PathListProps {
 
 const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
   return (
-    <Paper sx={{ p: '8px', mb: 2 }} elevation={1} id="pathList">
+    <Paper sx={{ p: '8px', mb: 2 }} elevation={1}>
       <Typography
         variant="subtitle2"
         sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}

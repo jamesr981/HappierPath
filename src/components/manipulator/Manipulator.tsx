@@ -77,7 +77,7 @@ const Manipulator = ({
   };
 
   return (
-    <div id="manipulator">
+          <div>
       <NavigationBar
         url={url}
         selectedProtocol={selectedProtocol}

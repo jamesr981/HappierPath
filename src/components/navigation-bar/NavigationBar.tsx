@@ -47,7 +47,6 @@ const NavigationBar = ({
         <InputLabel id="protocolSelector-label">Protocol</InputLabel>
         <Select
           labelId="protocolSelector-label"
-          id="protocolSelector"
           value={selectedProtocol}
           label="Protocol"
           onChange={(e) => onProtocolChange(e.target.value)}
@@ -58,7 +57,7 @@ const NavigationBar = ({
         </Select>
       </FormControl>
       <TextField
-        id="currentDomain"
+        
         label="Domain"
         variant="outlined"
         size="small"
@@ -67,7 +66,7 @@ const NavigationBar = ({
         sx={{ minWidth: 180 }}
       />
       <Button
-        id="pathGo"
+        
         variant="contained"
         color="primary"
         size="small"

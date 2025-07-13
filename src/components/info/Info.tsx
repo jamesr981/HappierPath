@@ -12,12 +12,11 @@ const Info = ({ url }: InfoProps) => {
         <InfoRow
           label="Protocol"
           value={url?.protocol.replace(':', '')}
-          id="protocol"
         />
-        <InfoRow label="Host" value={url?.hostname} id="host" />
-        <InfoRow label="Port" value={url?.port} id="port" />
-        <InfoRow label="Path" value={url?.pathname} id="path" />
-        <InfoRow label="Query" value={url?.search} id="query" />
+        <InfoRow label="Host" value={url?.hostname} />
+        <InfoRow label="Port" value={url?.port} />
+        <InfoRow label="Path" value={url?.pathname} />
+        <InfoRow label="Query" value={url?.search} />
       </Stack>
     </Paper>
   );
