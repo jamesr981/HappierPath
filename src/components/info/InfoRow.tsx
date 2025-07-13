@@ -1,0 +1,16 @@
+import { Typography } from "@mui/material";
+
+interface InfoRowProps {
+    label: string;
+    value: string | undefined;
+    id?: string;
+  }
+  
+  const InfoRow = ({ label, value, id }: InfoRowProps) => (
+    <Typography variant="body2" sx={{ mb: 0 }}>
+      <span style={{ fontWeight: 600, fontStyle: 'italic' }}>{label}:</span>{' '}
+      <span id={id}>{value}</span>
+    </Typography>
+  );
+
+  export default InfoRow;
