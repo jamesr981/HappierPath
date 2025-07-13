@@ -62,32 +62,21 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
   }, [links, getLinkString]);
 
   return (
-    <Paper sx={{ p: 2, mb: 2 }} elevation={2} id="editPaths">
-      <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+    <Paper sx={{ p: '8px', mb: 2 }} elevation={1} id="editPaths">
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5, fontSize: 15 }}>
         Path Editor
       </Typography>
       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={onJsonReadClick}
-          id="jsonRead"
-        >
+        <Button variant="outlined" color="primary" onClick={onJsonReadClick} id="jsonRead">
           Read Path List
         </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={onJsonWriteClick}
-          id="jsonWrite"
-        >
+        <Button variant="contained" color="primary" onClick={onJsonWriteClick} id="jsonWrite">
           Write Path List
         </Button>
       </Stack>
-      <Typography variant="body2" sx={{ mb: 1 }}>
-        Heading - This is a heading&gt;0
-        <br />
-        Link - This is a link&gt;/example/path
+      <Typography variant="body2" sx={{ mb: 1, whiteSpace: 'pre-line' }}>
+        {`Heading - This is a heading>0
+Link - This is a link>/example/path`}
       </Typography>
       <TextField
         id="jsonIO"
