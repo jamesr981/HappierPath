@@ -7,7 +7,7 @@ import {
   saveOptionsToStorage,
 } from './functions/storage';
 import { Options } from './types/Options';
-import { Box, Typography, Paper, Stack, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Typography, Paper, Stack, Checkbox, FormControlLabel, CssBaseline } from '@mui/material';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({ useSyncStorage: false });
@@ -29,36 +29,39 @@ const OptionsApp = () => {
   }, []);
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
-        Options
-      </Typography>
-      <Paper sx={{ p: 2, mb: 2 }} elevation={1}>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-            Sync Paths to Account:
-          </Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={options.useSyncStorage}
-                id="useSyncStorage"
-                color="primary"
-                onChange={() =>
-                  changeOptions({
-                    ...options,
-                    useSyncStorage: !options.useSyncStorage,
-                  })
-                }
-              />
-            }
-            label=""
-            sx={{ ml: 'auto' }}
-          />
-        </Stack>
-      </Paper>
-      <SupportButtons />
-    </Box>
+    <>
+      <CssBaseline />
+      <Box sx={{ width: 410, minHeight: '100vh', mx: 'auto', bgcolor: '#f9f9f9', p: 2 }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
+          Options
+        </Typography>
+        <Paper sx={{ p: 2, mb: 2 }} elevation={1}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+              Sync Paths to Account:
+            </Typography>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={options.useSyncStorage}
+                  id="useSyncStorage"
+                  color="primary"
+                  onChange={() =>
+                    changeOptions({
+                      ...options,
+                      useSyncStorage: !options.useSyncStorage,
+                    })
+                  }
+                />
+              }
+              label=""
+              sx={{ ml: 'auto' }}
+            />
+          </Stack>
+        </Paper>
+        <SupportButtons />
+      </Box>
+    </>
   );
 };
 
