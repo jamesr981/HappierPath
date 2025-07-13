@@ -1,7 +1,7 @@
 {
   "name": "happier-path",
   "private": true,
-  "version": "4.3.4",
+  "version": "4.4.0",
   "type": "module",
   "scripts": {
     "build-dev-chrome": "tsc -b && cross-env BROWSER=chrome vite build --mode development",
