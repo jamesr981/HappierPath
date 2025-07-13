@@ -9,7 +9,7 @@ interface InfoRowProps {
   const InfoRow = ({ label, value, id }: InfoRowProps) => (
     <Typography variant="body2" sx={{ mb: 0 }}>
       <span style={{ fontWeight: 600, fontStyle: 'italic' }}>{label}:</span>{' '}
-      <span id={id}>{value}</span>
+      <span id={id} style={{ wordBreak: 'break-all' }}>{value}</span>
     </Typography>
   );
 
