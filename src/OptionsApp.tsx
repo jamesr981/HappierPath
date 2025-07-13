@@ -42,7 +42,6 @@ const OptionsApp = () => {
       <Box
         sx={{
           width: 410,
-          minHeight: '100vh',
           mx: 'auto',
           bgcolor: '#f9f9f9',
           p: 2,

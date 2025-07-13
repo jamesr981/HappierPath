@@ -50,7 +50,6 @@ const App = () => {
       <Box
         sx={{
           width: 410,
-          minHeight: '100vh',
           mx: 'auto',
           p: '4px',
           bgcolor: '#f9f9f9',
