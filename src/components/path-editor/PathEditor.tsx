@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, Links } from '../../types/Link';
 import { saveLinksToStorage } from '../../functions/storage';
+import { Paper, Typography, Button, TextField, Stack } from '@mui/material';
 
 interface PathEditorProps {
   links: Links;
@@ -61,26 +62,33 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
   }, [links, getLinkString]);
 
   return (
-    <div id="editPaths">
-      <h2>Path Editor</h2>
-      <button id="jsonRead" onClick={onJsonReadClick}>
-        Read Path List
-      </button>
-      <button id="jsonWrite" onClick={onJsonWriteClick}>
-        Write Path List
-      </button>
-      <p>
-        Use the format "Name&gt;URL", with a new line separating each entry,
-        e.g. "Example Name&gt;/example/path/". If you want your line to be a
-        title (i.e. not go anywhere), make the path "0", e.g. "Example
-        Title&gt;0".
-      </p>
-      <textarea
+    <Paper sx={{ p: 2, mb: 2 }} elevation={2} id="editPaths">
+      <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+        Path Editor
+      </Typography>
+      <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
+        <Button variant="outlined" color="primary" onClick={onJsonReadClick} id="jsonRead">
+          Read Path List
+        </Button>
+        <Button variant="contained" color="primary" onClick={onJsonWriteClick} id="jsonWrite">
+          Write Path List
+        </Button>
+      </Stack>
+      <Typography variant="body2" sx={{ mb: 1 }}>
+        Use the format "Name&gt;URL", with a new line separating each entry, e.g. "Example Name&gt;/example/path/". If you want your line to be a title (i.e. not go anywhere), make the path "0", e.g. "Example Title&gt;0".
+      </Typography>
+      <TextField
         id="jsonIO"
         value={editorText}
         onChange={(e) => setEditorText(e.target.value)}
-      ></textarea>
-    </div>
+        multiline
+        minRows={8}
+        maxRows={16}
+        fullWidth
+        variant="outlined"
+        sx={{ fontFamily: 'monospace', fontSize: 13 }}
+      />
+    </Paper>
   );
 };
 
