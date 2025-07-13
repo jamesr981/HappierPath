@@ -8,7 +8,7 @@ interface ToggleLinkProps {
 
 const InfoLink = ({ setIsInfoShown, isInfoShown }: ToggleLinkProps) => {
   return (
-    <Box className="infoLink" sx={{ ml: 1 }}>
+    <Box sx={{ ml: 1 }}>
       <ToggleLink
         setToggle={setIsInfoShown}
         toggle={isInfoShown}

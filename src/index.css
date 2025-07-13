@@ -29,38 +29,10 @@ h2 {
   margin-bottom: 4px;
 }
 
-#tagline {
-  float: left;
-  font-style: italic;
-  font-size: 11px;
-  margin: 0;
-  padding: 0;
-}
-
 p,
 label {
   margin: 0;
   padding: 2px;
-}
-
-#info {
-  background-color: #f9f9f9;
-  border: 1px #bbbbbb solid;
-  margin: 6px 0px 6px 0px;
-  width: 380px;
-  overflow: auto;
-  padding: 2px;
-}
-
-#info p {
-  font-size: 10px;
-  margin: 0;
-  padding: 0;
-}
-
-#info p span {
-  background-color: #fff;
-  padding: 1px;
 }
 
 #manipulator {
@@ -72,26 +44,10 @@ input {
   font-size: 12px;
 }
 
-#currentDomain {
-  width: 208px;
-  height: 19px;
-}
-
 .tools {
   font-size: 10px;
 }
 
 .tools a {
   text-decoration: none;
-}
-
-#editPaths button:hover {
-  background-color: #ffffff;
-  color: #990000;
-  cursor: pointer;
-}
-
-.infoLink {
-  float: right;
-  margin-right: 4px;
 }

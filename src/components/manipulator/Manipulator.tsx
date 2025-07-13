@@ -7,6 +7,7 @@ import PathList from '../path-list/PathList';
 import { IsProtocol, Link, Protocol } from '../../types/Link';
 import { getCurrentTab } from '../../functions/setup';
 import Browser from 'webextension-polyfill';
+import { Box } from '@mui/material';
 
 interface ManipulatorProps {
   tab: Browser.Tabs.Tab | undefined;
@@ -85,16 +86,16 @@ const Manipulator = ({
         setHostname={setHostname}
         onNavigateLinkClick={onNavigateLinkClick}
       />
-      <div className="tools">
+      <Box className="tools" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
         <ToggleLink
           setToggle={setIsEditorOpen}
           toggle={isEditorOpen}
           toggledText="Close Path Editor"
           untoggledText="Open Path Editor"
         />
-
         <InfoLink isInfoShown={isInfoShown} setIsInfoShown={setIsInfoShown} />
-      </div>
+      </Box>
+      
       {(isInfoShown && <Info url={url} />) || null}
 
       {(!isEditorOpen && (
