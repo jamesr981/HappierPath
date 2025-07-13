@@ -11,7 +11,7 @@ async function createContextMenu() {
   if (!links || !links.links.length) {
     Browser.contextMenus.create({
       id: 'default_root',
-      title: 'root',
+      title: 'No paths configured',
       contexts: ['page'],
       enabled: false,
       documentUrlPatterns: DocumentUrlPatterns,
@@ -39,7 +39,7 @@ Browser.runtime.onInstalled.addListener(() => {
 const onStorageChange = (
   changes: Browser.Storage.StorageAreaOnChangedChangesType
 ) => {
-  const newValue: Links = JSON.parse(changes.json.newValue as string);
+  const newValue: Links = changes.json.newValue ? JSON.parse(changes.json.newValue as string) : {links: []};
 
   if (!newValue?.links) return;
   createContextMenu();
