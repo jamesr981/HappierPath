@@ -1,2 +1,2 @@
 export { useDialog } from './useDialog';
-export { useSnackbar } from './useSnackbar'; 
+export { useSnackbar } from './useSnackbar';

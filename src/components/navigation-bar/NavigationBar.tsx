@@ -57,21 +57,19 @@ const NavigationBar = ({
         </Select>
       </FormControl>
       <TextField
-        
         label="Domain"
         variant="outlined"
         size="small"
         value={hostname}
         onChange={(e) => setHostname(e.target.value)}
-        sx={{ 
+        sx={{
           minWidth: 180,
           '& .MuiInputBase-root': {
             backgroundColor: 'background.paper',
-          }
+          },
         }}
       />
       <Button
-        
         variant="contained"
         color="primary"
         size="small"

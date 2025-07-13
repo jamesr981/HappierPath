@@ -14,29 +14,49 @@ interface UseSnackbarReturn {
 export const useSnackbar = (): UseSnackbarReturn => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState<'error' | 'warning' | 'info' | 'success'>('error');
+  const [severity, setSeverity] = useState<
+    'error' | 'warning' | 'info' | 'success'
+  >('error');
 
-  const showMessage = useCallback((newMessage: string, newSeverity: 'error' | 'warning' | 'info' | 'success') => {
-    setMessage(newMessage);
-    setSeverity(newSeverity);
-    setIsOpen(true);
-  }, []);
+  const showMessage = useCallback(
+    (
+      newMessage: string,
+      newSeverity: 'error' | 'warning' | 'info' | 'success'
+    ) => {
+      setMessage(newMessage);
+      setSeverity(newSeverity);
+      setIsOpen(true);
+    },
+    []
+  );
 
-  const showError = useCallback((newMessage: string) => {
-    showMessage(newMessage, 'error');
-  }, [showMessage]);
+  const showError = useCallback(
+    (newMessage: string) => {
+      showMessage(newMessage, 'error');
+    },
+    [showMessage]
+  );
 
-  const showWarning = useCallback((newMessage: string) => {
-    showMessage(newMessage, 'warning');
-  }, [showMessage]);
+  const showWarning = useCallback(
+    (newMessage: string) => {
+      showMessage(newMessage, 'warning');
+    },
+    [showMessage]
+  );
 
-  const showInfo = useCallback((newMessage: string) => {
-    showMessage(newMessage, 'info');
-  }, [showMessage]);
+  const showInfo = useCallback(
+    (newMessage: string) => {
+      showMessage(newMessage, 'info');
+    },
+    [showMessage]
+  );
 
-  const showSuccess = useCallback((newMessage: string) => {
-    showMessage(newMessage, 'success');
-  }, [showMessage]);
+  const showSuccess = useCallback(
+    (newMessage: string) => {
+      showMessage(newMessage, 'success');
+    },
+    [showMessage]
+  );
 
   const close = useCallback(() => {
     setIsOpen(false);
@@ -52,4 +72,4 @@ export const useSnackbar = (): UseSnackbarReturn => {
     showSuccess,
     close,
   };
-}; 
+};

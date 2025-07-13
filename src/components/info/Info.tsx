@@ -9,10 +9,7 @@ const Info = ({ url }: InfoProps) => {
   return (
     <Paper elevation={2} sx={{ p: 1.2, mb: 2 }}>
       <Stack spacing={0}>
-        <InfoRow
-          label="Protocol"
-          value={url?.protocol.replace(':', '')}
-        />
+        <InfoRow label="Protocol" value={url?.protocol.replace(':', '')} />
         <InfoRow label="Host" value={url?.hostname} />
         <InfoRow label="Port" value={url?.port} />
         <InfoRow label="Path" value={url?.pathname} />

@@ -6,9 +6,12 @@ export interface ValidationResult {
   parsedLinks: Link[];
 }
 
-export const validateLinkFormat = (input: string, lineNumber: number): string | null => {
+export const validateLinkFormat = (
+  input: string,
+  lineNumber: number
+): string | null => {
   if (input.trim() === '') return null; // Skip empty lines
-  
+
   if (input.indexOf('>', 0) < 1) {
     return `Line ${lineNumber}: Malformed link - missing '>' separator`;
   }
@@ -37,7 +40,7 @@ export const parseLinksFromText = (text: string): ValidationResult => {
   arrayInput.forEach((input, index) => {
     const lineNumber = index + 1;
     const error = validateLinkFormat(input, lineNumber);
-    
+
     if (error) {
       errors.push(error);
       return;
@@ -46,21 +49,19 @@ export const parseLinksFromText = (text: string): ValidationResult => {
     if (input.trim() === '') return; // Skip empty lines
 
     const inputPair = input.split('>');
-    parsedLinks.push({ 
-      pathName: inputPair[0].trim(), 
-      pathUrl: inputPair[1].trim() 
+    parsedLinks.push({
+      pathName: inputPair[0].trim(),
+      pathUrl: inputPair[1].trim(),
     });
   });
 
   return {
     isValid: errors.length === 0,
     errors,
-    parsedLinks
+    parsedLinks,
   };
 };
 
 export const formatLinksToText = (links: Link[]): string => {
-  return links
-    .map(link => `${link.pathName}>${link.pathUrl}`)
-    .join('\n');
-}; 
+  return links.map((link) => `${link.pathName}>${link.pathUrl}`).join('\n');
+};

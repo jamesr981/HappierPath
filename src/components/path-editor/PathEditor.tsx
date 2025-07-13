@@ -14,7 +14,7 @@ interface PathEditorProps {
 const PathEditor = ({ links, setLinks }: PathEditorProps) => {
   const [editorText, setEditorText] = useState('');
   const [pendingLinks, setPendingLinks] = useState<Links | null>(null);
-  
+
   const confirmDialog = useDialog();
   const errorSnackbar = useSnackbar();
 
@@ -22,7 +22,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
     if (!editorText) return;
 
     const validationResult = parseLinksFromText(editorText);
-    
+
     if (!validationResult.isValid) {
       errorSnackbar.showError(validationResult.errors.join('\n'));
       return;
@@ -67,11 +67,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
           Path Editor
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={onJsonReadClick}
-          >
+          <Button variant="outlined" color="primary" onClick={onJsonReadClick}>
             Read Path List
           </Button>
           <Button
@@ -87,7 +83,6 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
 Link - This is a link>/example/path`}
         </Typography>
         <TextField
-          
           value={editorText}
           onChange={(e) => setEditorText(e.target.value)}
           multiline
@@ -95,12 +90,12 @@ Link - This is a link>/example/path`}
           maxRows={16}
           fullWidth
           variant="outlined"
-          sx={{ 
-            fontFamily: 'monospace', 
+          sx={{
+            fontFamily: 'monospace',
             fontSize: 13,
             '& .MuiInputBase-root': {
               backgroundColor: 'background.paper',
-            }
+            },
           }}
         />
       </Paper>

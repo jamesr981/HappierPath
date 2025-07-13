@@ -24,7 +24,10 @@ import {
 import { useTheme } from './contexts/ThemeContext';
 
 const OptionsApp = () => {
-  const [options, setOptions] = useState<Options>({ useSyncStorage: false, theme: 'light' as ThemeMode });
+  const [options, setOptions] = useState<Options>({
+    useSyncStorage: false,
+    theme: 'light' as ThemeMode,
+  });
   const { setTheme } = useTheme();
 
   const changeOptions = async (options: Options) => {

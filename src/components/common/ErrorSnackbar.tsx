@@ -22,11 +22,7 @@ const ErrorSnackbar = ({
       onClose={onClose}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
     >
-      <Alert 
-        onClose={onClose} 
-        severity={severity} 
-        sx={{ width: '100%' }}
-      >
+      <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
         <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
           {message}
         </Typography>
@@ -35,4 +31,4 @@ const ErrorSnackbar = ({
   );
 };
 
-export default ErrorSnackbar; 
+export default ErrorSnackbar;

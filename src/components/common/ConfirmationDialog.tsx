@@ -48,9 +48,7 @@ const ConfirmationDialog = ({
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle id="confirm-dialog-title">
-        {title}
-      </DialogTitle>
+      <DialogTitle id="confirm-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText id="confirm-dialog-description">
           {message}
@@ -60,10 +58,10 @@ const ConfirmationDialog = ({
         <Button onClick={onCancel} color="primary">
           {cancelText}
         </Button>
-        <Button 
-          onClick={onConfirm} 
-          color={getConfirmButtonColor()} 
-          variant="contained" 
+        <Button
+          onClick={onConfirm}
+          color={getConfirmButtonColor()}
+          variant="contained"
           autoFocus
         >
           {confirmText}
@@ -73,4 +71,4 @@ const ConfirmationDialog = ({
   );
 };
 
-export default ConfirmationDialog; 
+export default ConfirmationDialog;

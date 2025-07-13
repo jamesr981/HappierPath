@@ -12,7 +12,7 @@ export const useDialog = (initialState = false): UseDialogReturn => {
 
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
-  const toggle = useCallback(() => setIsOpen(prev => !prev), []);
+  const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
 
   return {
     isOpen,
@@ -20,4 +20,4 @@ export const useDialog = (initialState = false): UseDialogReturn => {
     close,
     toggle,
   };
-}; 
+};
