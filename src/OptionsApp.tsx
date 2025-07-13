@@ -15,10 +15,14 @@ import {
   Checkbox,
   FormControlLabel,
   CssBaseline,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 const OptionsApp = () => {
-  const [options, setOptions] = useState<Options>({ useSyncStorage: false });
+  const [options, setOptions] = useState<Options>({ useSyncStorage: false, theme: 'light' });
 
   const changeOptions = async (options: Options) => {
     const links = await getLinksFromStorage();
@@ -51,27 +55,51 @@ const OptionsApp = () => {
           Options
         </Typography>
         <Paper sx={{ p: 2, mb: 2 }} elevation={1}>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-              Sync Paths to Account:
-            </Typography>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={options.useSyncStorage}
-                  id="useSyncStorage"
-                  color="primary"
-                  onChange={() =>
+          <Stack spacing={2}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Sync Paths to Account:
+              </Typography>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={options.useSyncStorage}
+                    id="useSyncStorage"
+                    color="primary"
+                    onChange={() =>
+                      changeOptions({
+                        ...options,
+                        useSyncStorage: !options.useSyncStorage,
+                      })
+                    }
+                  />
+                }
+                label=""
+                sx={{ ml: 'auto' }}
+              />
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Theme:
+              </Typography>
+              <FormControl sx={{ minWidth: 120, ml: 'auto' }}>
+                <InputLabel id="theme-selector-label">Theme</InputLabel>
+                <Select
+                  labelId="theme-selector-label"
+                  value={options.theme}
+                  label="Theme"
+                  onChange={(e) =>
                     changeOptions({
                       ...options,
-                      useSyncStorage: !options.useSyncStorage,
+                      theme: e.target.value as 'light' | 'dark',
                     })
                   }
-                />
-              }
-              label=""
-              sx={{ ml: 'auto' }}
-            />
+                >
+                  <MenuItem value="light">Light</MenuItem>
+                  <MenuItem value="dark">Dark</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
           </Stack>
         </Paper>
         <SupportButtons />

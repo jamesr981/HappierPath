@@ -28,7 +28,7 @@ export const getOptionsFromStorage = async (): Promise<Options> => {
   const result = (await Browser.storage.sync.get('options')) as {
     options: Options;
   };
-  return result?.options ?? { useSyncStorage: false };
+  return result?.options ?? { useSyncStorage: false, theme: 'light' };
 };
 
 export const saveOptionsToStorage = async (options: Options) => {
