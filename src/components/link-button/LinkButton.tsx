@@ -1,4 +1,5 @@
 import Browser from 'webextension-polyfill';
+import { Button } from '@mui/material';
 
 interface LinkButtonProps {
   link: string;
@@ -10,9 +11,15 @@ const LinkButton = ({ link, buttonText }: LinkButtonProps) => {
     Browser.tabs.create({ url: link });
   };
   return (
-    <button onClick={onButtonClick} style={{ marginRight: '8px' }}>
+    <Button
+      onClick={onButtonClick}
+      variant="contained"
+      color="primary"
+      size="small"
+      sx={{ mr: 1 }}
+    >
       {buttonText}
-    </button>
+    </Button>
   );
 };
 

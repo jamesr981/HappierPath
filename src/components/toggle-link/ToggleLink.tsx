@@ -1,3 +1,5 @@
+import { Button } from '@mui/material';
+
 interface ToggleLinkProps {
   setToggle: (toggle: boolean) => void;
   toggle: boolean;
@@ -12,11 +14,14 @@ const ToggleLink = ({
   untoggledText,
 }: ToggleLinkProps) => {
   return (
-    <span id="togglePathEditor">
-      <a href="#" onClick={() => setToggle(!toggle)}>
-        {toggle ? toggledText : untoggledText}
-      </a>
-    </span>
+    <Button
+      variant="text"
+      size="small"
+      onClick={() => setToggle(!toggle)}
+      sx={{ minWidth: 0, p: 0, textTransform: 'none' }}
+    >
+      {toggle ? toggledText : untoggledText}
+    </Button>
   );
 };
 

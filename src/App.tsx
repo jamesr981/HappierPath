@@ -7,6 +7,7 @@ import { getCurrentTab } from './functions/setup';
 import { Links } from './types/Link';
 import Browser from 'webextension-polyfill';
 import { getLinksFromStorage } from './functions/storage';
+import { CssBaseline, Box } from '@mui/material';
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState<Browser.Tabs.Tab>();
@@ -45,21 +46,31 @@ const App = () => {
 
   return (
     <>
-      <Header />
+      <CssBaseline />
+      <Box
+        sx={{
+          width: 410,
+          mx: 'auto',
+          p: '4px',
+          bgcolor: 'background.default',
+        }}
+      >
+        <Header />
 
-      <Manipulator
-        tab={currentTab}
-        setCurrentTab={setCurrentTab}
-        url={currentUrl}
-        isEditorOpen={isEditorOpen}
-        setIsEditorOpen={setIsEditorOpen}
-        links={links.links}
-      />
+        <Manipulator
+          tab={currentTab}
+          setCurrentTab={setCurrentTab}
+          url={currentUrl}
+          isEditorOpen={isEditorOpen}
+          setIsEditorOpen={setIsEditorOpen}
+          links={links.links}
+        />
 
-      {(isEditorOpen && <PathEditor links={links} setLinks={setLinks} />) ||
-        null}
+        {(isEditorOpen && <PathEditor links={links} setLinks={setLinks} />) ||
+          null}
 
-      <SupportButtons />
+        <SupportButtons />
+      </Box>
     </>
   );
 };

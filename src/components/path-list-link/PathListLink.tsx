@@ -1,4 +1,5 @@
 import { Link } from '../../types/Link';
+import { Button } from '@mui/material';
 
 interface PathListLinkProps {
   link: Link;
@@ -16,7 +17,7 @@ const PathListLink = ({
   onNavigateLinkClick,
 }: PathListLinkProps) => {
   const onLinkClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     newTab: boolean
   ) => {
     event.preventDefault();
@@ -25,62 +26,122 @@ const PathListLink = ({
     onNavigateLinkClick(dataUrl, newTab, url);
   };
 
-  //Title
+  // Title row (special handling)
   if (link.pathUrl === '0') {
-    return <li className="listTitle">{link.pathName}</li>;
+    return { isTitle: true, content: link.pathName };
   }
 
-  //regex-based
+  // Regex-based
   if (link.pathUrl.includes('<<<')) {
     const [regexPattern, replacePattern] = link.pathUrl.split('<<<');
     const regex = new RegExp(regexPattern, 'gi');
 
     if (link.pathUrl.match(regex)) {
       const newPath = link.pathUrl.replace(regex, replacePattern);
-      return (
-        <li>
-          <a
-            href="#"
-            className="sameTabLink"
-            data-url={newPath}
-            onClick={(event) => onLinkClick(event, false)}
-          >
-            ${link.pathName}
-          </a>
-          <a
-            href="#"
-            className="newTabLink"
-            data-url={newPath}
-            onClick={(event) => onLinkClick(event, true)}
-          >
-            +tab
-          </a>
-        </li>
-      );
+      return {
+        isTitle: false,
+        content: (
+          <>
+            <Button
+              variant="text"
+              color="primary"
+              size="small"
+              data-url={newPath}
+              onClick={(event) => onLinkClick(event, false)}
+              sx={{
+                minWidth: 0,
+                mr: 0.5,
+                textTransform: 'none',
+                p: 0,
+                fontSize: 15,
+                color: 'primary.main',
+                background: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                  background: 'none',
+                },
+              }}
+            >
+              ${link.pathName}
+            </Button>
+            <Button
+              variant="text"
+              color="success"
+              size="small"
+              data-url={newPath}
+              onClick={(event) => onLinkClick(event, true)}
+              sx={{
+                minWidth: 0,
+                textTransform: 'none',
+                p: 0,
+                fontSize: 15,
+                color: 'success.main',
+                background: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                  background: 'none',
+                },
+              }}
+            >
+              +tab
+            </Button>
+          </>
+        ),
+      };
     }
   }
 
-  //Standad Paths
-  return (
-    <li>
-      <a
-        href="#"
-        className="sameTabLink"
-        data-url={link.pathUrl}
-        onClick={(event) => onLinkClick(event, false)}
-      >
-        {link.pathName}
-      </a>
-      <a
-        href="#"
-        className="newTabLink"
-        data-url={link.pathUrl}
-        onClick={(event) => onLinkClick(event, true)}
-      >
-        +tab
-      </a>
-    </li>
-  );
+  // Standard Paths
+  return {
+    isTitle: false,
+    content: (
+      <>
+        <Button
+          variant="text"
+          color="primary"
+          size="small"
+          data-url={link.pathUrl}
+          onClick={(event) => onLinkClick(event, false)}
+          sx={{
+            minWidth: 0,
+            mr: 0.5,
+            textTransform: 'none',
+            p: 0,
+            fontSize: 15,
+            color: 'primary.main',
+            background: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+              background: 'none',
+            },
+          }}
+        >
+          {link.pathName}
+        </Button>
+        <Button
+          variant="text"
+          color="success"
+          size="small"
+          data-url={link.pathUrl}
+          onClick={(event) => onLinkClick(event, true)}
+          sx={{
+            minWidth: 0,
+            textTransform: 'none',
+            p: 0,
+            fontSize: 15,
+            color: 'success.main',
+            background: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+              background: 'none',
+            },
+          }}
+        >
+          +tab
+        </Button>
+      </>
+    ),
+  };
 };
 
 export default PathListLink;
