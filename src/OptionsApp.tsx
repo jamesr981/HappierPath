@@ -21,7 +21,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { useTheme } from './contexts/ThemeContext';
+import { useTheme } from './hooks';
 
 const OptionsApp = () => {
   const [options, setOptions] = useState<Options>({
