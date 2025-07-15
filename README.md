@@ -40,6 +40,15 @@ Configure>/search/howsearchworks
 * This works because google.com and google.com.au share the same route structure. A traditional bookmark will also store the FQDN, which isn't useful when you have many websites that share the same route structure
 
 ## Change Log
+CHANGES IN vERSION 5.0.0
+
+Graphical Uplift
+
+Change Requests:
+* Use MUI as a component Library
+* Theme option to toggle between Light and Dark. Light being the default
+* Updated wording on the Read and Write Path List buttons to be simply Save and Reset Config
+
 CHANGES IN VERSION 4.3.0
 
 Extension Options menu

@@ -103,7 +103,7 @@ Link - This is a link>/example/path`}
       <ConfirmationDialog
         open={confirmDialog.isOpen}
         title="Confirm Path List Update"
-        message="This will replace your existing stored values with your new values in the edit box.\n\nAre you sure you want to continue?"
+        message="This will replace your existing stored values with your new values in the edit box. Are you sure you want to continue?"
         onConfirm={handleConfirmWrite}
         onCancel={handleCancelWrite}
         severity="warning"
