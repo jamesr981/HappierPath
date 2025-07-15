@@ -68,14 +68,14 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
           <Button variant="outlined" color="primary" onClick={onJsonReadClick}>
-            Read Path List
+            Reset Config
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={onJsonWriteClick}
           >
-            Write Path List
+            Save Config
           </Button>
         </Stack>
         <Typography variant="body2" sx={{ mb: 1, whiteSpace: 'pre-line' }}>
