@@ -11,7 +11,7 @@ const Header = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
         mb: 1,
-        p: '8px 12px',
+        paddingX: '12px',
         backgroundColor: theme.palette.primary.main,
         borderRadius: 1,
         color: theme.palette.primary.contrastText,

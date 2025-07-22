@@ -50,8 +50,9 @@ const PathListLink = ({
               onClick={(event) => onLinkClick(event, false)}
               sx={{
                 minWidth: 0,
-                mr: 0.25,
+                mr: '4px',
                 textTransform: 'none',
+                lineHeight: 1,
                 p: 0,
                 fontSize: 13,
                 color: 'primary.main',
@@ -73,6 +74,7 @@ const PathListLink = ({
               sx={{
                 minWidth: 0,
                 textTransform: 'none',
+                lineHeight: 1,
                 p: 0,
                 fontSize: 13,
                 color: 'success.main',
@@ -104,8 +106,9 @@ const PathListLink = ({
           onClick={(event) => onLinkClick(event, false)}
           sx={{
             minWidth: 0,
-            mr: 0.25,
+            mr: '4px',
             textTransform: 'none',
+            lineHeight: 1,
             p: 0,
             fontSize: 13,
             color: 'primary.main',
@@ -127,6 +130,7 @@ const PathListLink = ({
           sx={{
             minWidth: 0,
             textTransform: 'none',
+            lineHeight: 1,
             p: 0,
             fontSize: 13,
             color: 'success.main',

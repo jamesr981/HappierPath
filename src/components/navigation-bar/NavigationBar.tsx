@@ -42,7 +42,7 @@ const NavigationBar = ({
   };
 
   return (
-    <Stack direction="row" alignItems="center" spacing={1} mb={1}>
+    <Stack direction="row" alignItems="center" spacing={1}>
       <FormControl size="small" sx={{ minWidth: 90 }}>
         <InputLabel id="protocolSelector-label">Protocol</InputLabel>
         <Select

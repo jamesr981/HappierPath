@@ -47,7 +47,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       },
       text: {
         primary: theme === 'dark' ? '#ffffff' : '#000000',
-        secondary: theme === 'dark' ? '#b0b0b0' : '#666666',
+        secondary: theme === 'dark' ? '#b0b0b0' : '#444',
       },
     },
     components: {
