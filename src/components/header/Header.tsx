@@ -14,7 +14,7 @@ const Header = () => {
         borderRadius: 1,
         color: theme.palette.primary.contrastText,
         paddingX: '12px',
-        pb:'4px'
+        pb: '4px',
       }}
     >
       <Stack spacing={0} sx={{ minWidth: 0 }}>

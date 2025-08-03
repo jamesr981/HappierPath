@@ -77,7 +77,7 @@ Link - This is a link>/example/path`}
         maxRows={16}
         fullWidth
         variant="outlined"
-        slotProps={{input: {style: {fontSize: '12px'}}}}
+        slotProps={{ input: { style: { fontSize: '12px' } } }}
         sx={{
           '& .MuiInputBase-root': {
             backgroundColor: 'background.paper',
@@ -85,7 +85,7 @@ Link - This is a link>/example/path`}
         }}
       />
 
-      <Stack direction="row" spacing={1} mt='4px'>
+      <Stack direction="row" spacing={1} mt="4px">
         <Button variant="contained" color="error" onClick={onJsonReadClick}>
           Reset Config
         </Button>
