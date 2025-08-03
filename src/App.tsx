@@ -60,7 +60,7 @@ const App = () => {
           <Header />
         </Box>
 
-        <Box id="manipulator" sx={{ mb: '8px' }}>
+        <Box sx={{ mb: '8px' }}>
           <Manipulator
             tab={currentTab}
             setCurrentTab={setCurrentTab}
