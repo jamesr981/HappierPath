@@ -15,7 +15,6 @@ import {
   Stack,
   Checkbox,
   FormControlLabel,
-  CssBaseline,
   FormControl,
   InputLabel,
   Select,
@@ -49,7 +48,6 @@ const OptionsApp = () => {
 
   return (
     <>
-      <CssBaseline />
       <Box
         sx={{
           width: 410,

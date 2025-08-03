@@ -41,26 +41,26 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       primary: {
         main: '#1976d2',
       },
+      error: {
+        main: '#d32f2f',
+        light: '#ef5350',
+        dark: '#c62828',
+      },
       background: {
         default: theme === 'dark' ? '#1a1a1a' : '#f9f9f9',
         paper: theme === 'dark' ? '#2d2d2d' : '#ffffff',
       },
       text: {
         primary: theme === 'dark' ? '#ffffff' : '#000000',
-        secondary: theme === 'dark' ? '#b0b0b0' : '#666666',
+        secondary: theme === 'dark' ? '#b0b0b0' : '#444',
       },
     },
     components: {
       MuiButton: {
         styleOverrides: {
-          contained: ({ theme }) => ({
+          contained: () => ({
             textTransform: 'none',
             fontWeight: 500,
-            backgroundColor: theme.palette.primary.main,
-            color: theme.palette.getContrastText(theme.palette.primary.main),
-            '&:hover': {
-              backgroundColor: theme.palette.primary.dark,
-            },
           }),
         },
       },

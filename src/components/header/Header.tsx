@@ -10,12 +10,11 @@ const Header = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        mb: 1,
-        p: '8px 12px',
         backgroundColor: theme.palette.primary.main,
         borderRadius: 1,
         color: theme.palette.primary.contrastText,
-        minHeight: 0,
+        paddingX: '12px',
+        pb: '4px',
       }}
     >
       <Stack spacing={0} sx={{ minWidth: 0 }}>
@@ -37,7 +36,7 @@ const Header = () => {
             color: theme.palette.primary.contrastText,
           }}
         >
-          ... because everything is still relative
+          :)) ... because everything is still relative
         </Typography>
       </Stack>
       <IconButton

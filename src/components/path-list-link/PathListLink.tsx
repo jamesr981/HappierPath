@@ -50,10 +50,11 @@ const PathListLink = ({
               onClick={(event) => onLinkClick(event, false)}
               sx={{
                 minWidth: 0,
-                mr: 0.5,
+                mr: '4px',
                 textTransform: 'none',
+                ligneHeight: 1,
                 p: 0,
-                fontSize: 15,
+                fontSize: 13,
                 color: 'primary.main',
                 background: 'none',
                 '&:hover': {
@@ -73,8 +74,9 @@ const PathListLink = ({
               sx={{
                 minWidth: 0,
                 textTransform: 'none',
+                lineHeight: 1,
                 p: 0,
-                fontSize: 15,
+                fontSize: 13,
                 color: 'success.main',
                 background: 'none',
                 '&:hover': {
@@ -104,10 +106,11 @@ const PathListLink = ({
           onClick={(event) => onLinkClick(event, false)}
           sx={{
             minWidth: 0,
-            mr: 0.5,
+            mr: '4px',
             textTransform: 'none',
+            lineHeight: 1,
             p: 0,
-            fontSize: 15,
+            fontSize: 13,
             color: 'primary.main',
             background: 'none',
             '&:hover': {
@@ -127,8 +130,9 @@ const PathListLink = ({
           sx={{
             minWidth: 0,
             textTransform: 'none',
+            lineHeight: 1,
             p: 0,
-            fontSize: 15,
+            fontSize: 13,
             color: 'success.main',
             background: 'none',
             '&:hover': {
