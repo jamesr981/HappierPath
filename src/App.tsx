@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import Header from './components/header/Header';
-import PathEditor from './components/path-editor/PathEditor';
 import SupportButtons from './components/support-buttons/SupportButtons';
 import Manipulator from './components/manipulator/Manipulator';
 import { getCurrentTab } from './functions/setup';
 import { Links } from './types/Link';
 import Browser from 'webextension-polyfill';
 import { getLinksFromStorage } from './functions/storage';
-import { CssBaseline, Box } from '@mui/material';
+import { Box } from '@mui/material';
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState<Browser.Tabs.Tab>();
   const [currentUrl, setCurrentUrl] = useState<URL | null>(null);
-  const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [links, setLinks] = useState<Links>({ links: [] });
 
   useEffect(() => {
@@ -46,7 +44,6 @@ const App = () => {
 
   return (
     <>
-      <CssBaseline />
       <Box
         sx={{
           width: 410,
@@ -55,19 +52,23 @@ const App = () => {
           bgcolor: 'background.default',
         }}
       >
-        <Header />
+        <Box
+          sx={{
+            mb: 1,
+          }}
+        >
+          <Header />
+        </Box>
 
-        <Manipulator
-          tab={currentTab}
-          setCurrentTab={setCurrentTab}
-          url={currentUrl}
-          isEditorOpen={isEditorOpen}
-          setIsEditorOpen={setIsEditorOpen}
-          links={links.links}
-        />
-
-        {(isEditorOpen && <PathEditor links={links} setLinks={setLinks} />) ||
-          null}
+        <Box id="manipulator" sx={{ mb: '8px' }}>
+          <Manipulator
+            tab={currentTab}
+            setCurrentTab={setCurrentTab}
+            url={currentUrl}
+            links={links}
+            setLinks={setLinks}
+          />
+        </Box>
 
         <SupportButtons />
       </Box>

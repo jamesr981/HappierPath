@@ -1,6 +1,6 @@
 import PathListLink from '../path-list-link/PathListLink';
 import { Link } from '../../types/Link';
-import { Paper, Typography, List, ListItem } from '@mui/material';
+import { Typography, List, ListItem } from '@mui/material';
 
 interface PathListProps {
   url: URL | null;
@@ -14,7 +14,7 @@ interface PathListProps {
 
 const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
   return (
-    <Paper sx={{ p: '4px', mb: 1 }} elevation={1}>
+    <>
       <Typography
         variant="subtitle2"
         sx={{ fontWeight: 600, mb: 0.25, fontSize: 14 }}
@@ -26,7 +26,7 @@ const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
           const result = PathListLink({ link, url, onNavigateLinkClick });
           if (result.isTitle) {
             return (
-              <ListItem key={index} disableGutters sx={{ pl: 0, py: 0.05 }}>
+              <ListItem key={index} disableGutters sx={{ py: 0.05 }}>
                 <Typography
                   variant="body2"
                   sx={(theme) => {
@@ -44,13 +44,13 @@ const PathList = ({ links, url, onNavigateLinkClick }: PathListProps) => {
             );
           }
           return (
-            <ListItem key={index} disableGutters sx={{ pl: 0, py: 0.05 }}>
+            <ListItem key={index} disableGutters sx={{ py: 0.05 }}>
               {result.content}
             </ListItem>
           );
         })}
       </List>
-    </Paper>
+    </>
   );
 };
 

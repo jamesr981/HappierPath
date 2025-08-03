@@ -52,7 +52,7 @@ const PathListLink = ({
                 minWidth: 0,
                 mr: '4px',
                 textTransform: 'none',
-                lineHeight: 1,
+                ligneHeight: 1,
                 p: 0,
                 fontSize: 13,
                 color: 'primary.main',
