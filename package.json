@@ -30,7 +30,7 @@
     "@types/webextension-polyfill": "^0.12.3",
     "@vitejs/plugin-react": "^4.7.0",
     "addons-linter": "^7.17.0",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.0.0",
     "eslint": "^9.32.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.20",
