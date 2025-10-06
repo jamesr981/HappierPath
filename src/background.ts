@@ -65,10 +65,20 @@ Browser.contextMenus.onClicked.addListener((info, tab) => {
     return;
   }
 
-  goPath(tab, itemIndex);
+  // Check if user wants to open in new tab (middle-click or Ctrl/Cmd+click)
+  const openInNewTab =
+    info.button === 1 || // Middle click
+    info.modifiers?.includes('Ctrl') || // Ctrl key on Windows/Linux
+    info.modifiers?.includes('Command'); // Cmd key on Mac
+
+  goPath(tab, itemIndex, openInNewTab);
 });
 
-async function goPath(tab: Browser.Tabs.Tab, urlIndex: number) {
+async function goPath(
+  tab: Browser.Tabs.Tab,
+  urlIndex: number,
+  openInNewTab = false
+) {
   if (!tab.id) return;
 
   if (tab.id < 0) {
@@ -83,5 +93,10 @@ async function goPath(tab: Browser.Tabs.Tab, urlIndex: number) {
   if (!tab.url) return;
   const url = new URL(tab.url);
   const newUrl = `${url.protocol}//${url.hostname}${link.pathUrl}`;
-  Browser.tabs.update(tab.id, { url: newUrl });
+
+  if (openInNewTab) {
+    Browser.tabs.create({ url: newUrl });
+  } else {
+    Browser.tabs.update(tab.id, { url: newUrl });
+  }
 }
