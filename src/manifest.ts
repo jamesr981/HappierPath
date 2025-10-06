@@ -11,7 +11,7 @@ export function getManifest({ mode, browser }: ManifestOptions) {
   return {
     manifest_version: 3,
     name: 'HappierPath',
-    version: '5.0.1',
+    version: '5.0.2',
     description: '... because everything is still relative.',
     action: {
       default_icon: 'icon_16.png',
