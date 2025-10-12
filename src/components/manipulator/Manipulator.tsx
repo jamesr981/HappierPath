@@ -4,10 +4,11 @@ import NavigationBar from '../navigation-bar/NavigationBar';
 import ToggleLink from '../toggle-link/ToggleLink';
 import PathList from '../path-list/PathList';
 import { IsProtocol, Links, Protocol } from '../../types/Link';
-import { getCurrentTab } from '../../functions/setup';
 import Browser from 'webextension-polyfill';
 import { Box, Paper } from '@mui/material';
 import PathEditor from '../path-editor/PathEditor';
+import { webext } from '../../functions/webext';
+import type { GroupStrategy } from '../../functions/gopath';
 
 interface ManipulatorProps {
   tab: Browser.Tabs.Tab | undefined;
@@ -18,8 +19,6 @@ interface ManipulatorProps {
 }
 
 const Manipulator = ({
-  tab,
-  setCurrentTab,
   url,
   links,
   setLinks,
@@ -52,25 +51,17 @@ const Manipulator = ({
       newUrl += urlDomain + dataUrl;
     }
 
-    const handleTabUpdate = (
-      updatedTabId: number,
-      changeInfo: Browser.Tabs.OnUpdatedChangeInfoType
-    ) => {
-      if (updatedTabId === tab?.id && changeInfo.status === 'complete') {
-        Browser.tabs.onUpdated.removeListener(handleTabUpdate); // Cleanup listener
-        getCurrentTab().then((tab) => {
-          setCurrentTab(tab);
-        });
-      }
-    };
+    // If user clicked “+tab”, request: open in a new tab, same group (Chrome).
+    // If they clicked the normal link, reuse the current tab.
+    const strategy: GroupStrategy | undefined = newTab ? { kind: "same-group" } : undefined;
 
-    Browser.tabs.onUpdated.addListener(handleTabUpdate);
-
-    if (newTab || !tab?.id) {
-      Browser.tabs.create({ url: newUrl });
-    } else {
-      Browser.tabs.update(tab.id, { url: newUrl });
-    }
+    // No direct Browser.tabs.* calls here — let background do it (and group it).
+    void webext.runtime.sendMessage({
+      action: "openLink",
+      url: newUrl,
+      newTab,
+      strategy, // background will group if Chrome
+    });
   };
 
   return (
