@@ -1,6 +1,15 @@
 import Browser from 'webextension-polyfill';
 import { getLinksFromStorage } from './functions/storage';
 import { Links } from './types/Link';
+import {
+  createNextTo,
+  goPath,
+  groupIntoNamed,
+  groupIntoSameAs,
+} from './functions/gopath';
+import { fromChromeTab, fromFirefoxTab } from './functions/webextNormalize';
+import { webext } from './functions/webext';
+import { GroupStrategy } from './functions/gopath';
 
 const DocumentUrlPatterns = ['http://*/*', 'https://*/*', 'ftp://*/*'];
 
@@ -50,53 +59,101 @@ const onStorageChange = (
 Browser.storage.local.onChanged.addListener(onStorageChange);
 Browser.storage.sync.onChanged.addListener(onStorageChange);
 
+// ---- Message types ----
+type OpenLinkMessage = {
+  action: 'openLink';
+  url: string;
+  newTab?: boolean;
+  strategy?: GroupStrategy;
+};
+
+type GoPathMessage = {
+  action: 'goPath';
+  urlIndex: number;
+  openInNewTab?: boolean;
+  group?: GroupStrategy;
+};
+
 Browser.contextMenus.onClicked.addListener((info, tab) => {
-  if (!tab || !tab.id) return;
+  if (!tab) return;
 
-  let itemIndex: number;
-  const menuItemIdType = typeof info.menuItemId;
-  if (menuItemIdType === 'string') {
-    const parsed = parseInt(info.menuItemId as string);
-    if (isNaN(parsed)) return;
-    itemIndex = parsed;
-  } else if (menuItemIdType === 'number') {
-    itemIndex = info.menuItemId as number;
-  } else {
-    return;
-  }
+  // 1) Parse the menu item index
+  const idType = typeof info.menuItemId;
+  const itemIndex =
+    idType === 'number'
+      ? (info.menuItemId as number)
+      : idType === 'string'
+        ? Number.parseInt(info.menuItemId as string, 10)
+        : NaN;
 
-  // Check if user wants to open in new tab (middle-click or Ctrl/Cmd+click)
-  const openInNewTab =
-    info.button === 1 || // Middle click
-    info.modifiers?.includes('Ctrl') || // Ctrl key on Windows/Linux
-    info.modifiers?.includes('Command'); // Cmd key on Mac
+  if (!Number.isFinite(itemIndex)) return;
 
-  goPath(tab, itemIndex, openInNewTab);
+  // 2) Convert native Tab -> WebextTab (no `any`)
+  const compat = webext.env.isFirefox
+    ? fromFirefoxTab(tab as browser.tabs.Tab)
+    : fromChromeTab(tab as chrome.tabs.Tab);
+
+  // 3) Call goPath. Choose reuse current tab or open a new one (+ group)
+  void goPath(compat, itemIndex, {
+    openInNewTab: true,
+    group: { kind: 'same-group' },
+  });
 });
 
-async function goPath(
-  tab: Browser.Tabs.Tab,
-  urlIndex: number,
-  openInNewTab = false
-) {
-  if (!tab.id) return;
+// ---- openLink: direct URL version (used by PathListLink "+tab" flow) ----
+async function handleOpenLink(msg: OpenLinkMessage): Promise<void> {
+  const [active] = await webext.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+  if (!active) return;
 
-  if (tab.id < 0) {
-    console.warn(
-      'Context Menu navigation from extension popup is unsupported.'
-    );
+  if (!msg.newTab) {
+    if (active.id !== undefined) {
+      await webext.tabs.update(active.id, { url: msg.url });
+    }
     return;
   }
 
-  const links = await getLinksFromStorage();
-  const link = links.links[urlIndex];
-  if (!tab.url) return;
-  const url = new URL(tab.url);
-  const newUrl = `${url.protocol}//${url.hostname}${link.pathUrl}`;
+  const created = await createNextTo(active, msg.url);
+  const strat = msg.strategy;
+  if (!strat) return;
 
-  if (openInNewTab) {
-    Browser.tabs.create({ url: newUrl });
+  if (strat.kind === 'same-group') {
+    await groupIntoSameAs(active, created);
   } else {
-    Browser.tabs.update(tab.id, { url: newUrl });
+    await groupIntoNamed(active, created, strat.title);
   }
 }
+
+// ---- Message listener (popup/UI → background) ----
+webext.runtime.onMessage.addListener((message) => {
+  const act = (message as { action?: string }).action;
+
+  if (act === 'openLink') {
+    void handleOpenLink(message as OpenLinkMessage);
+    return;
+  }
+
+  if (act === 'goPath') {
+    void (async () => {
+      const [active] = await webext.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      if (!active) return;
+
+      const m = message as GoPathMessage;
+
+      const base = { openInNewTab: m.openInNewTab ?? false };
+      const opts = m.group
+        ? { ...base, group: m.group }
+        : m.openInNewTab
+          ? { ...base, group: { kind: 'same-group' } as const }
+          : base;
+
+      await goPath(active, m.urlIndex, opts);
+    })();
+    return;
+  }
+});
