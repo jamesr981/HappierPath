@@ -22,7 +22,7 @@ export function getManifest({ mode, browser }: ManifestOptions) {
       48: 'icon_48.png',
       128: 'icon_128.png',
     },
-    permissions: ['tabs', 'storage', 'contextMenus'],
+    permissions: ['tabs', 'tabGroups', 'storage', 'contextMenus'],
     options_ui: {
       page: 'options.html',
       open_in_tab: false,
