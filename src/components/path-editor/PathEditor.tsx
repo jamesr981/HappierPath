@@ -63,11 +63,26 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
         variant="subtitle2"
         sx={{ fontWeight: 600, mb: 0.25, fontSize: 14 }}
       >
-        Select your path:
+        Path Configuration Format:
       </Typography>
-      <Typography variant="body2" sx={{ mb: 1, whiteSpace: 'pre-line' }}>
-        {`Heading - This is a heading>0
-Link - This is a link>/example/path`}
+      <Typography
+        variant="body2"
+        sx={{
+          mb: 1,
+          whiteSpace: 'pre-line',
+          fontFamily: 'monospace',
+          fontSize: 11,
+        }}
+      >
+        {`Format: Name>Path[@Domain]
+> separates name from path (required)
+@ separates path from domain pattern (optional)
+
+Examples:
+My Heading>0
+Admin Panel>/admin
+GitHub Issues>/issues@github\\.com
+Multi-site API>/api@(dev|prod)\\.example\\.com`}
       </Typography>
       <TextField
         value={editorText}

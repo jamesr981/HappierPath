@@ -1,6 +1,7 @@
 export type Link = {
   pathUrl: string;
   pathName: string;
+  domainPattern?: string; // Optional domain regex pattern to filter context menu items
 };
 
 export type Links = {

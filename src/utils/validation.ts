@@ -29,6 +29,24 @@ export const validateLinkFormat = (
     return `Line ${lineNumber}: Missing link URL`;
   }
 
+  // Validate domain pattern if present (format: pathUrl@domainPattern)
+  const urlPart = inputPair[1].trim();
+  if (urlPart.includes('@')) {
+    const atIndex = urlPart.lastIndexOf('@');
+    const domainPattern = urlPart.substring(atIndex + 1).trim();
+
+    if (!domainPattern) {
+      return `Line ${lineNumber}: Empty domain pattern after '@'`;
+    }
+
+    // Try to validate regex pattern
+    try {
+      new RegExp(domainPattern);
+    } catch (e) {
+      return `Line ${lineNumber}: Invalid domain pattern regex - ${e instanceof Error ? e.message : 'unknown error'}`;
+    }
+  }
+
   return null;
 };
 
@@ -49,10 +67,29 @@ export const parseLinksFromText = (text: string): ValidationResult => {
     if (input.trim() === '') return; // Skip empty lines
 
     const inputPair = input.split('>');
-    parsedLinks.push({
-      pathName: inputPair[0].trim(),
-      pathUrl: inputPair[1].trim(),
-    });
+    const pathName = inputPair[0].trim();
+    const urlPart = inputPair[1].trim();
+
+    // Check if domain pattern is specified (format: pathUrl@domainPattern)
+    let pathUrl = urlPart;
+    let domainPattern: string | undefined = undefined;
+
+    if (urlPart.includes('@')) {
+      const atIndex = urlPart.lastIndexOf('@');
+      pathUrl = urlPart.substring(0, atIndex).trim();
+      domainPattern = urlPart.substring(atIndex + 1).trim();
+    }
+
+    const link: Link = {
+      pathName,
+      pathUrl,
+    };
+
+    if (domainPattern) {
+      link.domainPattern = domainPattern;
+    }
+
+    parsedLinks.push(link);
   });
 
   return {
@@ -63,5 +100,10 @@ export const parseLinksFromText = (text: string): ValidationResult => {
 };
 
 export const formatLinksToText = (links: Link[]): string => {
-  return links.map((link) => `${link.pathName}>${link.pathUrl}`).join('\n');
+  return links
+    .map((link) => {
+      const base = `${link.pathName}>${link.pathUrl}`;
+      return link.domainPattern ? `${base}@${link.domainPattern}` : base;
+    })
+    .join('\n');
 };
