@@ -8,7 +8,7 @@
     "skipLibCheck": true,
 
     /* Module Resolution */
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
