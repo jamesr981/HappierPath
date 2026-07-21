@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '23.10.0'
+          node-version: '26.5.0'
           cache: 'npm'
 
       - name: Install dependencies
@@ -52,7 +52,7 @@ jobs:
           cd dist && zip -r ../out/HappierPath-firefox.zip .
 
       - name: 📦 Upload zipped packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: zipped-builds
           path: out/
@@ -64,7 +64,7 @@ jobs:
 
     steps:
       - name: Download zipped artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: zipped-builds
           path: out
@@ -76,7 +76,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: 🚀 Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name }}
           name: "HappierPath Release ${{ github.ref_name }}"

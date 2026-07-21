@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Info from '../info/Info';
 import NavigationBar from '../navigation-bar/NavigationBar';
 import ToggleLink from '../toggle-link/ToggleLink';
@@ -8,6 +8,12 @@ import { getCurrentTab } from '../../functions/setup';
 import Browser from 'webextension-polyfill';
 import { Box, Paper } from '@mui/material';
 import PathEditor from '../path-editor/PathEditor';
+
+const getProtocol = (url: URL | null): Protocol => {
+  const protocol = url?.protocol ? `${url.protocol}//` : 'http://';
+
+  return IsProtocol(protocol) ? (protocol as Protocol) : 'http://';
+};
 
 interface ManipulatorProps {
   tab: Browser.Tabs.Tab | undefined;
@@ -25,19 +31,11 @@ const Manipulator = ({
   setLinks,
 }: ManipulatorProps) => {
   const [isInfoShown, setIsInfoShown] = useState(false);
-  const [selectedProtocol, setSelectedProtocol] = useState<Protocol>('http://');
-  const [hostname, setHostname] = useState('');
+  const [selectedProtocol, setSelectedProtocol] = useState<Protocol>(() =>
+    getProtocol(url)
+  );
+  const [hostname, setHostname] = useState(() => url?.hostname ?? '');
   const [isEditorOpen, setIsEditorOpen] = useState(false);
-
-  useEffect(() => {
-    if (!url) return;
-    const formattedProtocol = url.protocol + '//';
-    if (IsProtocol(formattedProtocol)) {
-      setSelectedProtocol(formattedProtocol as Protocol);
-    }
-
-    setHostname(url.hostname);
-  }, [url]);
 
   const onNavigateLinkClick = (
     dataUrl: string | null,

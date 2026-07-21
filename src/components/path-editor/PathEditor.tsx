@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Links } from '../../types/Link';
 import { saveLinksToStorage } from '../../functions/storage';
 import { Typography, Button, TextField, Stack } from '@mui/material';
@@ -12,7 +12,9 @@ interface PathEditorProps {
 }
 
 const PathEditor = ({ links, setLinks }: PathEditorProps) => {
-  const [editorText, setEditorText] = useState('');
+  const [editorText, setEditorText] = useState(() =>
+    formatLinksToText(links.links)
+  );
   const [pendingLinks, setPendingLinks] = useState<Links | null>(null);
 
   const confirmDialog = useDialog();
@@ -52,11 +54,6 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
     setEditorText(linkString);
   };
 
-  useEffect(() => {
-    const linkString = formatLinksToText(links.links);
-    setEditorText(linkString);
-  }, [links]);
-
   return (
     <>
       <Typography
@@ -85,7 +82,7 @@ Link - This is a link>/example/path`}
         }}
       />
 
-      <Stack direction="row" spacing={1} mt="4px">
+      <Stack direction="row" sx={{ mt: '4px' }} spacing={1}>
         <Button variant="contained" color="error" onClick={onJsonReadClick}>
           Reset Config
         </Button>
