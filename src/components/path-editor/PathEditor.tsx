@@ -39,6 +39,7 @@ const PathEditor = ({ links, setLinks }: PathEditorProps) => {
     if (pendingLinks) {
       saveLinksToStorage(pendingLinks);
       setLinks(pendingLinks);
+      setEditorText(formatLinksToText(pendingLinks.links));
     }
     confirmDialog.close();
     setPendingLinks(null);

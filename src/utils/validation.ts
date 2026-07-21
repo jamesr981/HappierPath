@@ -49,9 +49,11 @@ export const parseLinksFromText = (text: string): ValidationResult => {
     if (input.trim() === '') return; // Skip empty lines
 
     const inputPair = input.split('>');
+    const pathUrl = inputPair[1].trim().replace(/\/+$/, '');
+
     parsedLinks.push({
       pathName: inputPair[0].trim(),
-      pathUrl: inputPair[1].trim(),
+      pathUrl: pathUrl,
     });
   });
 
