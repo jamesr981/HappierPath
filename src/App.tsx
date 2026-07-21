@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Header from './components/header/Header';
 import SupportButtons from './components/support-buttons/SupportButtons';
 import Manipulator from './components/manipulator/Manipulator';
@@ -10,7 +10,6 @@ import { Box } from '@mui/material';
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState<Browser.Tabs.Tab>();
-  const [currentUrl, setCurrentUrl] = useState<URL | null>(null);
   const [links, setLinks] = useState<Links>({ links: [] });
 
   useEffect(() => {
@@ -30,16 +29,20 @@ const App = () => {
     asyncLoadLinks();
   }, []);
 
-  useEffect(() => {
-    if (!currentTab) return;
-    let url: URL | null = null;
-    if (currentTab.pendingUrl) {
-      url = new URL(currentTab.pendingUrl);
-    } else if (currentTab.url) {
-      url = new URL(currentTab.url);
+  const currentUrl = useMemo(() => {
+    if (!currentTab) {
+      return null;
     }
 
-    setCurrentUrl(url);
+    if (currentTab.pendingUrl) {
+      return new URL(currentTab.pendingUrl);
+    }
+
+    if (currentTab.url) {
+      return new URL(currentTab.url);
+    }
+
+    return null;
   }, [currentTab]);
 
   return (
@@ -62,6 +65,7 @@ const App = () => {
 
         <Box sx={{ mb: '8px' }}>
           <Manipulator
+            key={currentUrl?.href}
             tab={currentTab}
             setCurrentTab={setCurrentTab}
             url={currentUrl}
