@@ -61,7 +61,7 @@ const OptionsApp = () => {
         </Typography>
         <Paper sx={{ p: 2, mb: 2 }} elevation={1}>
           <Stack spacing={2}>
-            <Stack direction="row" sx={{alignItems: 'center'}} spacing={2}>
+            <Stack direction="row" sx={{ alignItems: 'center' }} spacing={2}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Sync Paths to Account:
               </Typography>
@@ -83,7 +83,7 @@ const OptionsApp = () => {
                 sx={{ ml: 'auto' }}
               />
             </Stack>
-            <Stack direction="row" sx={{alignItems: 'center'}} spacing={2}>
+            <Stack direction="row" sx={{ alignItems: 'center' }} spacing={2}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Theme:
               </Typography>
