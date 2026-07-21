@@ -34,7 +34,7 @@ const Manipulator = ({
   const [selectedProtocol, setSelectedProtocol] = useState<Protocol>(() =>
     getProtocol(url)
   );
-  const [hostname, setHostname] = useState('');
+  const [hostname, setHostname] = useState(() => url?.hostname ?? '');
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   const onNavigateLinkClick = (
