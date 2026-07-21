@@ -50,7 +50,7 @@ export const parseLinksFromText = (text: string): ValidationResult => {
 
     const inputPair = input.split('>');
     const pathUrl = inputPair[1].trim().replace(/\/+$/, '');
-    
+
     parsedLinks.push({
       pathName: inputPair[0].trim(),
       pathUrl: pathUrl,
