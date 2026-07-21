@@ -82,7 +82,7 @@ Link - This is a link>/example/path`}
         }}
       />
 
-      <Stack direction="row" spacing={1} mt="4px">
+      <Stack direction="row" sx={{mt: '4px'}} spacing={1}>
         <Button variant="contained" color="error" onClick={onJsonReadClick}>
           Reset Config
         </Button>
