@@ -92,7 +92,10 @@ async function goPath(
   const link = links.links[urlIndex];
   if (!tab.url) return;
   const url = new URL(tab.url);
-  const newUrl = `${url.protocol}//${url.hostname}${link.pathUrl}`;
+
+  const pathUrl = link.pathUrl.trim().replace(/\/+$/, '');
+
+  const newUrl = `${url.protocol}//${url.hostname}${pathUrl}`;
 
   if (openInNewTab) {
     Browser.tabs.create({ url: newUrl });

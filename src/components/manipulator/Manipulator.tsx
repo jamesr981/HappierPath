@@ -50,6 +50,8 @@ const Manipulator = ({
       newUrl += urlDomain + dataUrl;
     }
 
+    newUrl = newUrl.trim().replace(/\/+$/, '');
+
     const handleTabUpdate = (
       updatedTabId: number,
       changeInfo: Browser.Tabs.OnUpdatedChangeInfoType
