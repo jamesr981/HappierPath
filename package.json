@@ -10,8 +10,8 @@
     "build-prod-firefox": "tsc -b && cross-env BROWSER=firefox vite build --mode production",
     "lint": "eslint .",
     "addon-lint:firefox": "addons-linter ./dist",
-    "prettier-fix": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\"",
-    "prettier": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,html,json,md,yml}\""
+    "prettier-fix": "prettier --write",
+    "prettier": "prettier --check"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
