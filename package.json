@@ -28,7 +28,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/webextension-polyfill": "^0.12.5",
-    "@vitejs/plugin-react": "^6.0.3",
+    "@vitejs/plugin-react": "^6.0.5",
     "addons-linter": "^10.9.0",
     "cross-env": "^10.1.0",
     "eslint": "^10.8.0",
